@@ -30,7 +30,7 @@ switch(process.env.NODE_ENV) {
     config = environment['test'];
     break;
   default:
-    throw new Error('Environment is not valid');
+    config = environment['local'];
     
 
 }
