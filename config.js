@@ -20,19 +20,17 @@ const environment = {
 };
 let config;
 switch(process.env.NODE_ENV) {
-  case "local":
-    config = environment['local'];
-    break;
-  case "production":
-    config = environment['production'];
-    break;
-  case "test":
-    config = environment['test'];
-    break;
-  default:
-    config = environment['local'];
-    
-
+case "local":
+  config = environment['local'];
+  break;
+case "production":
+  config = environment['production'];
+  break;
+case "test":
+  config = environment['test'];
+  break;
+default:
+  config = environment['local'];
 }
 console.log({...config, ...environment.common});
 module.exports = {...config, ...environment.common};

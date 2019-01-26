@@ -5,7 +5,7 @@
   "main": "server.js",
   "scripts": {
     "test": "mocha --recursive tests",
-    "devstart": "set NODE_ENV=test && nodemon server.js",
+    "devstart": "NODE_ENV=test nodemon server.js",
     "build": "cd frontend && npm run build"
   },
   "repository": {

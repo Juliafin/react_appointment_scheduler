@@ -25,14 +25,8 @@ app.use(htmlRouter);
 
 
 const connectMongoose = (mongo_url=MONGO_URL) => {
-  return mongoose.connect(MONGO_URL, {useNewUrlParser: true});
+  return mongoose.connect(mongo_url, {useNewUrlParser: true});
 };
-
-const disconnectMongoose = () => {
-  return mongoose.disconnect();
-};
-
-
 
 const startServer = () => {
   return new Promise((resolve, reject) => {
@@ -51,14 +45,15 @@ const closeServer = () => {
 };
 
 const initServer = async() => {
+  let mongooseConnection;
   try {
     await startServer();
-    await connectMongoose(MONGO_URL);
+    mongooseConnection = await connectMongoose(MONGO_URL);
     console.log('Successfully connected to mongoose');
 
   } catch(err) {
     console.log('Something went wrong: ', err);
-    await disconnectMongoose();
+    mongooseConnection.disconnect();
   }
 };
 
@@ -68,4 +63,4 @@ if (require.main === module) {
 }
 
 
-module.exports = {app, startServer, closeServer, connectMongoose, disconnectMongoose};
+module.exports = {app, startServer, closeServer, connectMongoose};

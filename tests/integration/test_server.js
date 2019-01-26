@@ -1,4 +1,4 @@
-process.env.NODE_ENV = 'test'
+process.env.NODE_ENV = 'test';
 const chai = require('chai');
 const {expect} = require('chai');
 const chaiHttp = require('chai-http');
@@ -38,17 +38,23 @@ describe('Testing main server endpoints', () => {
 
 });
 
-describe('Test mongoose connection', () => {
-  // after(disconnectMongoose);
-  it('Successfully connects', async() => {
+describe('Test mongoose connection', (done) => {
+  let connection;
+
+  it('Successfully connects', () => {
     let isConnected = false;
-    try {
-      await connectMongoose(MONGO_URL);
-      isConnected = true;
-    } catch {
-      throw new Error('Unable to connect');
-    }
-    expect(isConnected).to.equal(true);
-    await disconnectMongoose();
+    let _connection;
+    connectMongoose(MONGO_URL)
+      .then((connection) => {
+        _connection = connection;
+        isConnected = true;
+      })
+      .catch(() => {
+      })
+      .finally(() => {
+        _connection.disconnect();
+        expect(isConnected).to.equal(true);
+
+      })
   });
 });
