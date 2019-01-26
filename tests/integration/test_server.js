@@ -6,7 +6,7 @@ const {app, startServer, closeServer} = require('../../server');
 chai.use(chaiHttp);
 
 describe('Testing main server endpoints', () => {
-  after(closeServer);
+  afterEach(closeServer);
   it('Server Starts successfully', () => {
     startServer();
   });

@@ -1,15 +1,21 @@
 const express = require('express');
 const morgan = require('morgan');
 const app = express();
+const path = require('path');
 const {PORT} = require('./config');
 let server;
+const buildFolder = path.join(__dirname, '/frontend/build/');
 
 if (process.env.NODE_ENV !== 'production') {
   app.use(morgan('common'));
 }
 
-app.get('/', (req, res) => res.send("hello"));
+// Serve frontend statically
+
+app.use(express.static(buildFolder))
+
 app.get('/test', (req, res) => res.json({message: "Welcome to the appointment scheduler!"}));
+app.get('*', (req, res) => res.sendFile(buildFolder + 'index.html'));
 
 
 const startServer = () => {
@@ -24,10 +30,6 @@ const closeServer = () => {
 if (require.main === module) {
   startServer();
 }
-
-
-
-
 
 
 module.exports = {app, startServer, closeServer};
