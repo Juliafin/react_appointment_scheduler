@@ -19,7 +19,7 @@ describe('Testing main server endpoints', () => {
     expect(response).to.haveOwnProperty('text')
     expect(response.text).to.be.a('string');   
     expect(response.text).to.have.lengthOf.above(0);
-    expect(response.text).to.equal('hello');
+    expect(response.text.indexOf('html')).to.not.equal(-1)
   });
   
   it('/test', async() => {
