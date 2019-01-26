@@ -16,10 +16,10 @@ describe('Testing main server endpoints', () => {
     console.log(response.text);
     // response.text.should.be.a('string');
     expect(response).to.be.a('object');
-    expect(response).to.haveOwnProperty('text')
+    expect(response).to.haveOwnProperty('text');
     expect(response.text).to.be.a('string');   
     expect(response.text).to.have.lengthOf.above(0);
-    expect(response.text.indexOf('html')).to.not.equal(-1)
+    expect(response.text.indexOf('html')).to.not.equal(-1);
   });
   
   it('/test', async() => {
