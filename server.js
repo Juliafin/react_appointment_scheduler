@@ -5,6 +5,7 @@ const path = require('path');
 const {PORT} = require('./config');
 let server;
 const buildFolder = path.join(__dirname, '/frontend/build/');
+const htmlRouter = require('./backend/routes/html_routes');
 
 if (process.env.NODE_ENV !== 'production') {
   app.use(morgan('common'));
@@ -14,8 +15,9 @@ if (process.env.NODE_ENV !== 'production') {
 
 app.use(express.static(buildFolder))
 
-app.get('/test', (req, res) => res.json({message: "Welcome to the appointment scheduler!"}));
-app.get('*', (req, res) => res.sendFile(buildFolder + 'index.html'));
+// Routes
+
+app.use(htmlRouter);
 
 
 const startServer = () => {
