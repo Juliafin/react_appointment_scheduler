@@ -2,7 +2,7 @@ process.env.NODE_ENV = 'test';
 const chai = require('chai');
 const {expect} = require('chai');
 const chaiHttp = require('chai-http');
-const {app, startServer, closeServer, connectMongoose, disconnectMongoose} = require('../../server');
+const {app, startServer, closeServer, connectMongoose} = require('../../server');
 const {MONGO_URL} = require('../../config');
 
 console.log('MONGO URL IN TEST SERVER', MONGO_URL);
@@ -38,8 +38,7 @@ describe('Testing main server endpoints', () => {
 
 });
 
-describe('Test mongoose connection', (done) => {
-  let connection;
+describe('Test mongoose connection', () => {
 
   it('Successfully connects', () => {
     let isConnected = false;
@@ -55,6 +54,6 @@ describe('Test mongoose connection', (done) => {
         _connection.disconnect();
         expect(isConnected).to.equal(true);
 
-      })
+      });
   });
 });
