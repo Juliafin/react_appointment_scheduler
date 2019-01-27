@@ -5,12 +5,12 @@ const {emailValid, passwordValid} = require('./validations');
 const userSchema = new mongoose.Schema({
   email: {
     type: String,
-    // required: true,
+    required: true,
     match: emailValid
   },
   password: {
     type: String,
-    // required: true,
+    required: true,
     match: passwordValid
   },
   appointments: [{

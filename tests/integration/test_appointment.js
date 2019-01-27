@@ -11,10 +11,10 @@ console.log()
 describe('Testing Appointment model', (done) => {
   before(() => connectMongoose(MONGO_URL));
   after(() => {mongoose.disconnect();});
-  // afterEach(() => {
-  //   Appointment.deleteMany()
-  //     .then(done, done);
-  // });
+  afterEach(() => {
+    Appointment.deleteMany()
+      .then(done, done);
+  });
 
 
   it ('Creates Appointments successfully', async() => {
@@ -22,19 +22,12 @@ describe('Testing Appointment model', (done) => {
     user = new User(user);
     let userId = user._id;
     let appointments = generateAppointments(10, userId);
+    await user.save();
+    await Appointment.create(appointments);
 
-    let savedUser = await user.save();
-    console.log('AFTER USER SAVE');
-    console.log('SAVED USER', savedUser);
-    // appointments.forEach(async(appt) => {
-    //   await Appointment.create(appt);
-    // });
-    console.log('APPOINTMENT', appointments[0]);
-    let savedAppointment = await Appointment.create(appointments[0]);
-    console.log('saved appointment', savedAppointment);
-
-    let appointmentsInDb = await Appointment.find();
-    console.log(appointmentsInDb, 'APOINTMENTS IN DB');
+    let appointmentCount = await Appointment.count();
+    console.log(appointmentCount, 'APOINTMENTS IN DB');
+    expect(appointmentCount).to.equal(appointments.length);
   });
 
 });

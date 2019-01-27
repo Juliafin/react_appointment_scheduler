@@ -13,7 +13,7 @@ const generateAppointments = (len, userID) => {
     appointments.push(appointment);
 
   }
-  console.log(appointments);
+  // console.log(appointments);
   return appointments;
 };
 
