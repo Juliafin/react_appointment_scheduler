@@ -8,7 +8,7 @@ const apiRouter = require('./backend/routes/api_routes');
 const app = express();
 let server;
 
-
+console.log(MONGO_URL, 'MONGO URL');
 mongoose.Promise = global.Promise;
 
 const buildFolder = path.join(__dirname, '/frontend/build/');

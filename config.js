@@ -32,5 +32,5 @@ case "test":
 default:
   config = environment['local'];
 }
-console.log({...config, ...environment.common});
+// console.log({...config, ...environment.common});
 module.exports = {...config, ...environment.common};
