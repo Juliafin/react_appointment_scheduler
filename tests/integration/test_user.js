@@ -9,7 +9,7 @@ const {User} = require('../../backend/models/');
 mongoose.Promise = global.Promise;
 // let mongooseConnection;
 
-describe.skip('Testing user model', (done) => {
+describe('Testing user model', (done) => {
   before(() => connectMongoose(MONGO_URL));
   after(() => {mongoose.disconnect();});
   afterEach(() => {

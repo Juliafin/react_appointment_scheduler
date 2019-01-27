@@ -4,8 +4,10 @@ const path = require('path');
 const mongoose = require('mongoose');
 const {PORT, MONGO_URL} = require('./config');
 const htmlRouter = require('./backend/routes/html_routes');
+const apiRouter = require('./backend/routes/api_routes');
 const app = express();
 let server;
+
 
 mongoose.Promise = global.Promise;
 
@@ -20,6 +22,7 @@ if (process.env.NODE_ENV !== 'production') {
 app.use(express.static(buildFolder));
 // Routes
 
+app.use('/api', apiRouter);
 app.use(htmlRouter);
 
 
@@ -41,6 +44,7 @@ const startServer = () => {
 
 const closeServer = () => {
   server.close();
+  mongoose.disconnect();
 };
 
 const initServer = async() => {
@@ -48,13 +52,10 @@ const initServer = async() => {
   try {
     await startServer();
     mongooseConnection = await connectMongoose(MONGO_URL);
-    console.log('Successfully connected to mongoose');
 
   } catch(err) {
     console.log('Something went wrong: ', err);
-  } finally {
     mongooseConnection.disconnect();
-    
   }
 };
 

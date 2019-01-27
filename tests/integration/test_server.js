@@ -6,10 +6,9 @@ const chaiHttp = require('chai-http');
 const {app, startServer, closeServer} = require('../../server');
 const {MONGO_URL} = require('../../config');
 
-console.log('MONGO URL IN TEST SERVER', MONGO_URL);
 chai.use(chaiHttp);
 
-describe.skip('Testing main server endpoints', () => {
+describe('Testing main server endpoints', () => {
   afterEach(closeServer);
   after(() => mongoose.disconnect());
 
