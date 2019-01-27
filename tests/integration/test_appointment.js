@@ -7,12 +7,12 @@ const {MONGO_URL} = require('../../config');
 const {connectMongoose} = require('../../server');
 const {Appointment, User} = require('../../backend/models/');
 mongoose.Promise = global.Promise;
-console.log()
 describe('Testing Appointment model', (done) => {
   before(() => connectMongoose(MONGO_URL));
   after(() => {mongoose.disconnect();});
   afterEach(() => {
     Appointment.deleteMany()
+      .then(() => User.deleteMany())
       .then(done, done);
   });
 

@@ -23,7 +23,7 @@ describe.skip('Testing user model', (done) => {
     let foundUser = await User.findOne(user);
     expect(foundUser.password).to.be.a('string');
     expect(foundUser.email).to.be.a('string');
-    expect(user._id.toString()).to.equal(foundUser._id.toString())
+    expect(user._id.toString()).to.equal(foundUser._id.toString());
     expect(foundUser.password).to.be.equal(user.password);
     expect(foundUser.email).to.be.equal(user.email);
   });
