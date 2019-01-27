@@ -4,6 +4,7 @@ const path = require('path');
 const mongoose = require('mongoose');
 const {PORT, MONGO_URL} = require('./config');
 const htmlRouter = require('./backend/routes/html_routes');
+const bodyParser = require('body-parser');
 const app = express();
 let server;
 
@@ -18,7 +19,7 @@ if (process.env.NODE_ENV !== 'production') {
 // Serve frontend statically
 
 app.use(express.static(buildFolder));
-
+app.use(bodyParser.json({extended: true}))
 // Routes
 
 app.use(htmlRouter);
@@ -53,7 +54,9 @@ const initServer = async() => {
 
   } catch(err) {
     console.log('Something went wrong: ', err);
+  } finally {
     mongooseConnection.disconnect();
+    
   }
 };
 

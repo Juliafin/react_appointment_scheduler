@@ -4,8 +4,8 @@
   "description": "An appointment scheduler using react/redux.",
   "main": "server.js",
   "scripts": {
-    "test": "mocha --recursive tests",
-    "devstart": "NODE_ENV=test nodemon server.js",
+    "test": "mocha --recursive --timeout 15000 tests",
+    "devstart": "nodemon server.js",
     "build": "cd frontend && npm run build"
   },
   "repository": {
