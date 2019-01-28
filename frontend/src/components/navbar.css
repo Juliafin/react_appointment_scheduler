@@ -1,0 +1,24 @@
+.nav {
+  background-color: aqua;
+}
+
+nav.nav .brand-logo.right {
+  color:rgb(54, 0, 0);
+}
+
+.navLink {
+  color:rgb(54, 0, 0);
+  font-size: 24px;
+  
+}
+.welcomeText {
+  position: absolute;
+  top: 10vw;
+}
+
+.welcome button.btn {
+  position: relative;
+  top: -20vw;
+  margin: 0 2vw;
+  background-color: aqua;
+}
