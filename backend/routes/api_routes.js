@@ -21,7 +21,7 @@ apiRouter.get('/appointments', async(req, res) => {
     let user = await User
       .findById(userID)
       .populate('appointments');
-    console.log('USER', user)
+    // console.log('USER', user)
     if (!user) {
       return res.status(404).json({message: "The user has not been found"});
     } else {
@@ -33,7 +33,7 @@ apiRouter.get('/appointments', async(req, res) => {
       }
     }
   } catch(err) {
-    console.log(err)
+    // console.log(err)
     res.status(500).json({message: "The provided id is invalid"});
     console.log(err);
   }

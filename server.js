@@ -2,6 +2,7 @@ const express = require('express');
 const morgan = require('morgan');
 const path = require('path');
 const mongoose = require('mongoose');
+const cors = require('cors');
 const {PORT, MONGO_URL} = require('./config');
 const htmlRouter = require('./backend/routes/html_routes');
 const apiRouter = require('./backend/routes/api_routes');
@@ -17,6 +18,7 @@ if (process.env.NODE_ENV !== 'production') {
   app.use(morgan('common'));
 }
 
+app.use(cors());
 // Serve frontend statically
 
 app.use(express.static(buildFolder));

@@ -24,3 +24,16 @@
 ul#nav-mobile{
   background-color: #00bcd4;
 }
+
+div.welcome button {
+  padding: 0;
+}
+
+div.welcome button a {
+  display: block;
+  width: 10vw;
+}
+
+div.welcome button:hover {
+  background-color: rgb(31, 152, 249);
+}
