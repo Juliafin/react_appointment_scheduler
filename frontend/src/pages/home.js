@@ -21,11 +21,16 @@ class Home extends Component {
   }
 
   render() {
+    console.log(this.props.ipData, 'ipdata in home.js!');
+    let ipInfo = null;
+    if (this.props.ipData) {
+      ipInfo = ` guest from ${this.props.ipData.city}, ${this.props.ipData.region}!`;
+    }
     return (
       <div className="headerContainer">
         <header className="App-header">
           <p className="welcomeText">
-          Welcome! Please login or try out the app in Guest Mode!
+          Welcome{ipInfo ? ipInfo: '!'} Please login or try out the app in Guest Mode!
           </p>
         </header>
         <div className="welcome">
@@ -46,7 +51,8 @@ class Home extends Component {
 };
 
 const mapStateToProps = (state) => ({
-  guestMode: state.guestMode
+  guestMode: state.guestMode,
+  ipData: state.ipData
 });
 
 export default connect(mapStateToProps)(Home);

@@ -11,7 +11,7 @@ const Nav = () => {
         <Link className="navLink" to="/">Home</Link>
       </NavItem>
       <NavItem href='components.html'>
-        <Link className="navLink" to="/scheduler">Schedule</Link>
+        <Link className="navLink" to="/schedule">Schedule</Link>
       </NavItem>
     </Navbar>
   );
