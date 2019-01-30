@@ -9,20 +9,17 @@
   justify-content: center;
   font-size: calc(16px + 2vmin);
   
-  color: white;
+  color: black;
 }
 
-.headerContainer{
-  background-color: #141822;
-}
 
 .welcome a {
-  color: #141822;
+  color: white;
   font-weight: 500;
 }
 
 ul#nav-mobile{
-  background-color: #00bcd4;
+  background-color: #336b87;
 }
 
 div.welcome button {
@@ -35,5 +32,5 @@ div.welcome button a {
 }
 
 div.welcome button:hover {
-  background-color: rgb(31, 152, 249);
+  background-color: #763626;
 }

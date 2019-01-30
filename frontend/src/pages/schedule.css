@@ -1,0 +1,25 @@
+.guestMode {
+  color: white;
+  text-align: right;
+  font-size: 1.3vw;
+  position: absolute;
+  right: 3vw;
+}
+
+#closeModal {
+  background-color: #763626;
+  margin-right: 2vw;
+}
+
+#updateModal {
+  background-color: #336B87;
+  margin-right: 2vw;
+}
+
+label {
+  display: block;
+}
+
+.modal.modal-fixed-footer div.modal-content {
+  overflow: hidden;
+}

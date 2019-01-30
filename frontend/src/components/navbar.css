@@ -1,13 +1,22 @@
 .nav {
-  background-color: aqua;
+  background-color: #336B87;
 }
 
 nav.nav .brand-logo.right {
-  color:rgb(54, 0, 0);
+  color: white;
+  margin-right: 2vw;
+}
+
+div.nav-wrapper ul.nav a:hover {
+  background-color: 763626;
+}
+
+ul#nav-mobile {
+  background-color: #00bcd4;
 }
 
 .navLink {
-  color:rgb(54, 0, 0);
+  color: white;
   font-size: 24px;
   
 }
@@ -20,5 +29,13 @@ nav.nav .brand-logo.right {
   position: relative;
   top: -20vw;
   margin: 0 2vw;
-  background-color: aqua;
+  background-color: #336B87;
+}
+
+a.navLink:hover {
+  background-color: #763626;
+}
+
+div.nav-wrapper ul a:hover {
+  background-color: #763626;
 }
