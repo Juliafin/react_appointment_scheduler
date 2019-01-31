@@ -1,5 +1,4 @@
 import React, {Component} from 'react';
-import moment from 'moment';
 import {connect} from 'react-redux';
 import Appointment from './appointment';
 import './timeTable.css';
@@ -8,8 +7,8 @@ import {
   setCurrentAppointmentName, 
   setCurrentAppointmentIndex,
   setCurrentAppointmentTime,
-  setCurrentAppointmentEditedState,
-  setAppointmentTimes
+  setCurrentAppointmentPhoneNumber,
+  setCurrentAppointmentEditedState
 } from '../actions/appointmentActions';
 
 
@@ -19,32 +18,16 @@ class TimeTable extends Component {
     this.appointmentClick = this.appointmentClick.bind(this);
   }
 
-  componentDidMount() {
-    this.generateTimes();
-  }
-
-  generateTimes() {
-    const hours = [];
-    for(let hour = this.props.initialHour, i = 0; hour < this.props.endHour + 1; hour++, i++) {
-      hours.push({
-        appointmentTime: moment({ hour }).format('h:mm A'),
-        appointmentName: "+",
-        appointmentIndex: i,
-        edited: false
-      });
-    }
-    // console.log(hours);
-    this.props.dispatch(setAppointmentTimes(hours));
-  }
-
   appointmentClick(event) {
     let index = parseInt(event.target.getAttribute("index"));
     let appointmentName = this.props.appointments[index].appointmentName;
     let appointmentTime = this.props.appointments[index].appointmentTime;
+    let appointmentPhoneNumber = this.props.appointments[index].appointmentPhoneNumber;
     this.props.dispatch(setCurrentAppointmentTime(appointmentTime));
     this.props.dispatch(setCurrentAppointmentName(appointmentName));
+    this.props.dispatch(setCurrentAppointmentPhoneNumber(appointmentPhoneNumber));
     this.props.dispatch(setCurrentAppointmentIndex(index));
-    this.props.dispatch(setCurrentAppointmentEditedState(index))
+    this.props.dispatch(setCurrentAppointmentEditedState(index));
     this.props.dispatch(showModal());
 
   }
@@ -59,6 +42,7 @@ class TimeTable extends Component {
             appointmentTime={appt.appointmentTime} 
             appointmentName={appt.appointmentName}
             appointmentIndex={appt.appointmentIndex}
+            appointmentPhoneNumber={appt.appointmentPhoneNumber}
             edited={appt.edited}
             onClick={this.appointmentClick}/>
         );
@@ -68,7 +52,8 @@ class TimeTable extends Component {
       <div>
         <div className="timeTable">
           <div className="appointmentHead name">Appointment Name</div>
-          <div className="appointmentHead time">Appointment Time</div>
+          <div className="appointmentHead phoneNumber">Phone</div>
+          <div className="appointmentHead time">Time</div>
         </div>
         {appointments}
       </div>
@@ -78,8 +63,6 @@ class TimeTable extends Component {
 }
 
 const mapStateToProps = (state) => ({
-  initialHour: state.initialHour,
-  endHour: state.endHour,
   appointments: state.appointments
 });
 

@@ -49,16 +49,8 @@ export const setCurrentAppointmentTime = (appointmentTime) => ({
 export const SET_CURRENT_APPOINTMENT_NAME = "SET CURRENT APPOINTMENT NAME";
 export const setCurrentAppointmentName = (appointmentName) => ({
   type: SET_CURRENT_APPOINTMENT_NAME,
-  appointmentName: appointmentName
+  appointmentName
 });
-
-
-export const SET_APPOINTMENT_TIMES = "SET APPOINTMENT TIMES";
-export const setAppointmentTimes = (appointments) => ({
-  type: SET_APPOINTMENT_TIMES,
-  appointments
-});
-
 
 export const SET_CURRENT_APPOINTMENT_INDEX = "SET CURRENT APPOINTMENT INDEX";
 export const setCurrentAppointmentIndex = (index) => ({
@@ -66,6 +58,17 @@ export const setCurrentAppointmentIndex = (index) => ({
   appointmentIndex: index
 });
 
+export const SET_CURRENT_APPOINTMENT_PHONE_NUMBER = "SET CURRENT APPOINTMENT PHONE NUMBER";
+export const setCurrentAppointmentPhoneNumber = (appointmentPhoneNumber) => ({
+  type: SET_CURRENT_APPOINTMENT_PHONE_NUMBER,
+  appointmentPhoneNumber
+});
+
+export const SET_APPOINTMENT_TIMES = "SET APPOINTMENT TIMES";
+export const setAppointmentTimes = (appointments) => ({
+  type: SET_APPOINTMENT_TIMES,
+  appointments
+});
 
 export const UPDATE_APPOINTMENT = "UPDATE APPOINTMENT" ;
 export const updateAppointment = () => ({
@@ -84,6 +87,16 @@ export const setAppointmentEdited = () => ({
 
 export const SET_CURRENT_APPOINTMENT_EDIT_STATE = "SET CURRENT APPOINTMENT EDITED";
 export const setCurrentAppointmentEditedState = (index) => ({
-  type:SET_CURRENT_APPOINTMENT_EDIT_STATE,
+  type: SET_CURRENT_APPOINTMENT_EDIT_STATE,
   appointmentIndex: index
+});
+
+export const VALIDATE_PHONE_NUMBER = "VALIDATE PHONE NUMBER";
+export const validatePhoneNumber = () => ({
+  type: VALIDATE_PHONE_NUMBER
+});
+
+export const VALIDATE_APPOINTMENT_NAME = "VALIDATE APPOINTMENT NAME";
+export const validateAppointmentName = () => ({
+  type: VALIDATE_APPOINTMENT_NAME
 });

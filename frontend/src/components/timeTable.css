@@ -14,10 +14,15 @@
 }
 
 .appointmentHead.name {
-  width: 40vw;
+  width: 35vw;
   margin-right: 5vw;
 }
 
+.appointmentHead.phoneNumber {
+  width: 20vw;
+  margin-right: 4vw;
+}
+
 .appointmentHead.time {
-  width: 30vw;
+  width: 15vw;
 }

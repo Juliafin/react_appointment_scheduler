@@ -1,13 +1,15 @@
 import React, {Component} from 'react';
 import {connect} from 'react-redux';
-import moment from 'moment';
-import {Modal, Button, Row, Input} from 'react-materialize';
+import {Modal, Button, Row, Col, Input} from 'react-materialize';
 import {
   hideModal, 
   setCurrentAppointmentName,
+  setCurrentAppointmentPhoneNumber,
   updateAppointment,
   clearAppointment,
-  setAppointmentEdited
+  setAppointmentEdited,
+  validateAppointmentName,
+  validatePhoneNumber
 } from './../actions/appointmentActions';
 import TimeTable from './../components/timeTable';
 import './schedule.css';
@@ -20,11 +22,11 @@ class Schedule extends Component {
     this.updateApptName = this.updateApptName.bind(this);
     this.updateAppointment = this.updateAppointment.bind(this);
     this.clearAppointment = this.clearAppointment.bind(this);
+    this.updateApptPhoneNumber = this.updateApptPhoneNumber.bind(this);
   }
 
   closeModal() {
     this.props.dispatch(hideModal());
-    // this.props.dispatch(clearAppointment());
   }
   
   closeModalAndUpdate() {
@@ -38,22 +40,23 @@ class Schedule extends Component {
     this.props.dispatch(clearAppointment());
   }
 
-
-
   updateApptName(event) {
     let name = event.target.value;
     this.props.dispatch(setCurrentAppointmentName(name));
+    this.props.dispatch(validateAppointmentName(name));
+  }
+
+  updateApptPhoneNumber(event) {
+    let phoneNumber = event.target.value;
+    this.props.dispatch(setCurrentAppointmentPhoneNumber(phoneNumber));
+    this.props.dispatch(validatePhoneNumber(phoneNumber));
   }
 
   updateAppointment() {
     this.props.dispatch(updateAppointment());
   }
-
-
     
-  
   render() {
-    console.log(this.props.currentAppointment, 'this props current appointment in schedule js render')
     let modalHeader = this.props.currentAppointment.edited ? 'Update Appointment Details' : 'Create Appointment';
     let modalButtonText = this.props.currentAppointment.edited ? 'Update' : 'Create';
     return (
@@ -73,23 +76,42 @@ class Schedule extends Component {
           fixedFooter
           actions={[
             <Button id="closeModal" key="close" onClick={this.closeModal}>Close</Button>,
-            <Button id="updateModal" key="updateModal" onClick={this.closeModalAndUpdate}>{modalButtonText}</Button>
+            <Button 
+              id="updateModal" 
+              key="updateModal" 
+              onClick={this.closeModalAndUpdate}
+              disabled={!this.props.appointmentNameValid || !this.props.phoneNumberValid}>
+              {modalButtonText}
+            </Button>
           ]}
           modalOptions={{complete: this.closeModal}}>
           <Row>
-            <label htmlFor="appointmentName">Appointment Name</label>
-            <Input
-              id="appointmentName"
-              onLabel="test"
-              offLabel="hello"
-              placeHolder={this.props.currentAppointment.appointmentName === '+' ? 'Enter an appointment' : ''}
-              defaultValue={this.props.currentAppointment.appointmentName}
-              value={this.props.currentAppointment.appointmentName === '+' ? '' : this.props.currentAppointment.appointmentName}
-              onChange={this.updateApptName}>
-            </Input>
+            <Col l={6}>
+              <Input
+                id="appointmentName"
+                placeholder={['+', ''].indexOf(this.props.currentAppointment.appointmentName) === -1 ? '' : 'Enter an appointment'}
+                defaultValue={this.props.currentAppointment.appointmentName}
+                value={this.props.currentAppointment.appointmentName === '+' ? '' : this.props.currentAppointment.appointmentName}
+                onChange={this.updateApptName}
+                error={!this.props.appointmentNameValid ? 'Enter an appointment name' : ''}
+                success={this.props.appointmentNameValid ? '\u2713' : ''}
+                label="Appointment Name">
+              </Input>
+            </Col>
+            <Col l={6}>
+              <Input
+                id="appointmentPhoneNumber"
+                placeholder={this.props.currentAppointment.appointmentPhoneNumber === '' ? '123-123-5123': ''}
+                value={this.props.currentAppointment.appointmentPhoneNumber === '' ? '' : this.props.currentAppointment.appointmentPhoneNumber}
+                onChange={this.updateApptPhoneNumber}
+                label="Appointment Phone Number"
+                error={!this.props.phoneNumberValid ? '123-456-7890' : ''}
+                success={this.props.phoneNumberValid ? '\u2713': ''}>
+              </Input>
+            </Col>
           </Row>
-          <Row>
 
+          <Row>
             <div>Appointment Time: {this.props.currentAppointment.appointmentTime}</div>
           </Row>
           {this.props.appointmentValid ? null : <div className="error"></div>}
@@ -103,7 +125,11 @@ const mapStateToProps = (state) => ({
   guestMode: state.guestMode,
   showModal: state.showModal,
   currentAppointment: state.currentAppointment,
-  appointments: state.appointments
+  appointments: state.appointments,
+  appointmentNameValid: state.appointmentNameValid,
+  phoneNumberValid: state.phoneNumberValid,
+  appointmentNameFormTouched: state.appointmentNameFormTouched,
+  appointmentPhoneNumberFormTouched: state.appointmentPhoneNumberFormTouched
 
 });
 

@@ -7,11 +7,14 @@ import {
   SET_CURRENT_APPOINTMENT_NAME,
   SET_CURRENT_APPOINTMENT_TIME,
   SET_CURRENT_APPOINTMENT_INDEX,
+  SET_CURRENT_APPOINTMENT_PHONE_NUMBER,
   SET_CURRENT_APPOINTMENT_EDIT_STATE,
   SET_APPOINTMENT_EDITED,
   SET_APPOINTMENT_TIMES,
   UPDATE_APPOINTMENT,
-  CLEAR_CURRENT_APPOINTMENT
+  CLEAR_CURRENT_APPOINTMENT,
+  VALIDATE_PHONE_NUMBER,
+  VALIDATE_APPOINTMENT_NAME,
 } from '../actions/appointmentActions';
 
 export const initialState = {
@@ -22,7 +25,11 @@ export const initialState = {
   ipData: null,
   initialHour: 9,
   endHour: 17,
-  currentAppointment: {}
+  currentAppointment: {},
+  appointmentNameValid: false,
+  phoneNumberValid: false,
+  appointmentNameFormTouched: false,
+  appointmentPhoneNumberFormTouched: false
 };
 
 export const appointmentReducer = (state=initialState, action) => {
@@ -54,10 +61,20 @@ export const appointmentReducer = (state=initialState, action) => {
       {}, 
       state, {
         currentAppointment: {
+          ...state.currentAppointment,
           appointmentTime: action.appointmentTime, 
-          ...state.currentAppointment
         }
       });
+  case SET_CURRENT_APPOINTMENT_PHONE_NUMBER:
+    return Object.assign(
+      {},
+      state, {
+        currentAppointment: {
+          ...state.currentAppointment,
+          appointmentPhoneNumber: action.appointmentPhoneNumber,
+        }
+      }
+    );
   case SET_CURRENT_APPOINTMENT_INDEX:
     return Object.assign(
       {},
@@ -78,7 +95,6 @@ export const appointmentReducer = (state=initialState, action) => {
     if (!state.currentAppointment.edited) {
       state.currentAppointment.edited = true;
     }
-    console.log(state.currentAppointment, 'state current appointment in update appointment')
     return Object.assign({}, state, {
       appointments: updatedAppointments,
       currentAppointment: {...state.currentAppointment}
@@ -93,8 +109,6 @@ export const appointmentReducer = (state=initialState, action) => {
     return Object.assign({}, state, {appointments});
   
   case SET_CURRENT_APPOINTMENT_EDIT_STATE:
-    console.log('state inside current appointment edit state', state);
-    console.log('action in current appointment edit state', action)
     return Object.assign(
       {},
       state,
@@ -105,8 +119,13 @@ export const appointmentReducer = (state=initialState, action) => {
         }
       }
     );
+  case VALIDATE_PHONE_NUMBER:
+    let phoneNumber = state.currentAppointment.appointmentPhoneNumber;
+    let phoneNumberValid = new RegExp(/^\d{3}-\d{3}-\d{4}$/);
+    return Object.assign({}, state, {phoneNumberValid: phoneNumberValid.test(phoneNumber)});
+  case VALIDATE_APPOINTMENT_NAME:
+    return Object.assign({}, state, {appointmentNameValid: Boolean(state.currentAppointment.appointmentName)});
   default:
     return state;
-    
   }
 };

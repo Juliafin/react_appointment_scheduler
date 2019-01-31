@@ -22,7 +22,7 @@
   -moz-border-radius: 2px;
   -ms-border-radius: 2px;
   -o-border-radius: 2px;
-  margin: 2vw 4vw;
+  margin: 2vw 2vw;
   padding-top: 0.4vw;
   color: white;
   transition: background-color 500ms;
@@ -55,11 +55,15 @@
 }
 
 .name {
-  width: 40vw;
+  width: 35vw;
 }
 
 .time {
-  width: 30vw;
+  width: 15vw;
+}
+
+.phoneNumber {
+  width: 20vw
 }
 
 @media only screen and (max-width: 800px) {

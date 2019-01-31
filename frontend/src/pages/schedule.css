@@ -20,6 +20,6 @@ label {
   display: block;
 }
 
-.modal.modal-fixed-footer div.modal-content {
-  overflow: hidden;
+div.col label.active {
+  min-width: 16vw;
 }

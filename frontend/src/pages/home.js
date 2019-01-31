@@ -13,7 +13,9 @@ class Home extends Component {
     this.guestMode = this.guestMode.bind(this);
   }
   componentDidMount() {
-    this.props.dispatch(getIpInfo());
+    if (!this.props.ipData) {
+      this.props.dispatch(getIpInfo());
+    }
   }
 
   guestMode() {
