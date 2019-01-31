@@ -1,4 +1,5 @@
 const mongoose = require('mongoose');
+const bcrypt = require('bcryptjs');
 const {emailValid, passwordValid} = require('./validations');
 
 
@@ -10,14 +11,30 @@ const userSchema = new mongoose.Schema({
   },
   password: {
     type: String,
-    required: true,
-    match: passwordValid
+    required: true
   },
   appointments: [{
     type: mongoose.Schema.Types.ObjectId,
     ref: "Appointment"
   }]
 });
+
+
+userSchema.methods.showUser = function () {
+  return {
+    email: this.email,
+    appointments: this.appointments,
+    _id: this._id
+  }; 
+};
+
+userSchema.statics.hashPassword = function(password) {
+  return bcrypt.hash(password, 10);
+};
+
+userSchema.methods.validatePassword = function(password) {
+  return bcrypt.compare(password, this.password);
+};
 
 
 const User = mongoose.model("User", userSchema);

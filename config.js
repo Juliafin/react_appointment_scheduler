@@ -14,7 +14,8 @@ const environment = {
     MONGO_URL: process.env.MONGO_URL_TEST
   },
   common: {
-    PORT: process.env.PORT
+    PORT: process.env.PORT,
+    SECRET: process.env.SECRET
   }
   
 };
