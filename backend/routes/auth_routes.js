@@ -32,7 +32,7 @@ authRouter.post('/register', async(req, res) => {
     let createdUser = await User.create({
       email, password: hashedPassword
     });
-    let userToken = jsonWebToken.sign({createdUser}, SECRET); 
+    let userToken = jsonWebToken.sign({user:createdUser}, SECRET); 
     console.log('Created user');
     res.json({
       message: "User Created", 
@@ -68,7 +68,7 @@ authRouter.post('/login', async(req, res) => {
     console.log('Password valid', passwordValid);
   
     if (passwordValid) {
-      let userToken = jsonWebToken.sign({userFound}, SECRET);
+      let userToken = jsonWebToken.sign({user:userFound}, SECRET);
       return res.json({message: "Successfully logged in", userToken, loggedInUser: userFound.showUser()});
     }
   } catch(error) {

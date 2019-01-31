@@ -4,6 +4,9 @@ const passwordValid = [/((?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[@#$?%!/\{\}\[\]\(\)
 
 const appointmentMaxLength = [35, 'The length is longer than 20 characters.'];
 
+const phoneNumberValid = [/^\d{3}-\d{3}-\d{4}$/, "Phone Number must be in the format 123-456-7890"];
+
 module.exports =  {
-  emailValid, passwordValid, appointmentMaxLength
+  emailValid, passwordValid, appointmentMaxLength,
+  phoneNumberValid
 };

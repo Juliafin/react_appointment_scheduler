@@ -1,16 +1,21 @@
 const mongoose = require('mongoose');
-const {appointmentMaxLength} = require('./validations');
+const {appointmentMaxLength, phoneNumberValid} = require('./validations');
 
 const appointmentSchema = new mongoose.Schema({
   time: {
-    type: Date,
-    default: Date.now()
+    type: String,
   },
   appointmentName: {
     type: String,
     required: true,
     trim: true,
     maxlength: appointmentMaxLength
+  },
+  appointmentPhoneNumber: {
+    type: String,
+    required: true,
+    trim: true,
+    match: phoneNumberValid
   },
   user: {
     type: mongoose.Schema.Types.ObjectId,
