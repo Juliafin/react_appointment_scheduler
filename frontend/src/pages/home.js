@@ -29,18 +29,26 @@ class Home extends Component {
       ipInfo = ` guest from ${this.props.ipData.city}, ${this.props.ipData.region}!`;
     }
     return (
-      <div className="headerContainer">
+      <div className="headerContainer slowPopIn">
         <header className="App-header">
           <p className="welcomeText">
           Welcome{ipInfo ? ipInfo: '!'} Please login or try out the app in Guest Mode!
           </p>
         </header>
         <div className="welcome">
-          <Button waves="green">
+          <Button 
+            waves="green">
             <Link to="/login">
             Login
             </Link>
           </Button>
+          <Button 
+            waves="green">
+            <Link to="/register">
+            Register
+            </Link>
+          </Button>
+          
           <Button waves="green">
             <Link onClick={this.guestMode} to="/schedule">
             Guest

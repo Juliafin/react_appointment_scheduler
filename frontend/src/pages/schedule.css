@@ -23,3 +23,19 @@ label {
 div.col label.active {
   min-width: 16vw;
 }
+
+#appointmentReset {
+  background-color: #763626;
+  margin-top: 4vw;
+}
+
+button#closeConfirmationModal.waves-effect {
+  background-color: #763626;
+  margin-right: 2vw;
+}
+
+button#confirmConfirmationModal.waves-effect {
+  background-color: #336B87;
+  margin-right: 2vw;
+
+}

@@ -5,13 +5,21 @@ import {
   hideModal, 
   setCurrentAppointmentName,
   setCurrentAppointmentPhoneNumber,
+  setAppointmentTimes,
   updateAppointment,
   clearAppointment,
   setAppointmentEdited,
   validateAppointmentName,
-  validatePhoneNumber
+  validatePhoneNumber,
+  retrieveAppointmentsCache,
+  writeAppointmentsCache,
+  resetAppointments,
+  showDeleteConfirmationModal,
+  hideDeleteConfirmationModal
+  
 } from './../actions/appointmentActions';
 import TimeTable from './../components/timeTable';
+import generateTimes from './../utils/generateSchedule';
 import './schedule.css';
 
 class Schedule extends Component {
@@ -23,17 +31,32 @@ class Schedule extends Component {
     this.updateAppointment = this.updateAppointment.bind(this);
     this.clearAppointment = this.clearAppointment.bind(this);
     this.updateApptPhoneNumber = this.updateApptPhoneNumber.bind(this);
+    this.validate = this.validate.bind(this);
+    this.showConfirmationModal = this.showConfirmationModal.bind(this);
+    this.closeConfirmationModal = this.closeConfirmationModal.bind(this);
+    this.deleteAppointments = this.deleteAppointments.bind(this);
+  }
+
+  componentDidMount() {
+    this.props.dispatch(retrieveAppointmentsCache());
   }
 
   closeModal() {
     this.props.dispatch(hideModal());
+    this.clearAppointment();
   }
   
   closeModalAndUpdate() {
     this.props.dispatch(hideModal());
     this.props.dispatch(updateAppointment());
     this.props.dispatch(setAppointmentEdited());
+    this.props.dispatch(writeAppointmentsCache());
+    this.clearAppointment();
+  }
 
+  validate() {
+    this.props.dispatch(validateAppointmentName());
+    this.props.dispatch(validatePhoneNumber());
   }
 
   clearAppointment() {
@@ -43,26 +66,67 @@ class Schedule extends Component {
   updateApptName(event) {
     let name = event.target.value;
     this.props.dispatch(setCurrentAppointmentName(name));
-    this.props.dispatch(validateAppointmentName(name));
+    this.props.dispatch(validateAppointmentName());
   }
 
   updateApptPhoneNumber(event) {
     let phoneNumber = event.target.value;
     this.props.dispatch(setCurrentAppointmentPhoneNumber(phoneNumber));
-    this.props.dispatch(validatePhoneNumber(phoneNumber));
+    this.props.dispatch(validatePhoneNumber());
   }
 
   updateAppointment() {
     this.props.dispatch(updateAppointment());
+    
+  }
+
+  deleteAppointments() {
+    this.props.dispatch(resetAppointments());
+    this.props.dispatch(setAppointmentTimes(generateTimes(this.props.initialHour, this.props.endHour)));
+
+    this.closeConfirmationModal();
+  }
+
+  closeConfirmationModal () {
+    this.props.dispatch(hideDeleteConfirmationModal());
+  }
+
+  showConfirmationModal () {
+    this.props.dispatch(showDeleteConfirmationModal());
   }
     
   render() {
     let modalHeader = this.props.currentAppointment.edited ? 'Update Appointment Details' : 'Create Appointment';
     let modalButtonText = this.props.currentAppointment.edited ? 'Update' : 'Create';
     return (
-      <div>
+      <div className="slowPopIn">
         {this.props.guestMode ? (
           <div className="scheduleContainer">
+            <Button 
+              id="appointmentReset"
+              waves="red"
+              onClick={this.showConfirmationModal}>Reset Appointments
+            </Button>
+            <Modal
+              header="Delete Appointments"
+              modalOptions={{complete: this.closeConfirmationModal}}
+              actions={[
+                <Button 
+                  key="close" 
+                  onClick={this.closeConfirmationModal}
+                  waves="red"
+                  id="closeConfirmationModal"
+                >Close</Button>,
+                <Button 
+                  key="confirm"
+                  onClick={this.deleteAppointments}
+                  waves="green"
+                  id="confirmConfirmationModal"
+                >Confirm</Button>
+              ]}
+              open={this.props.showDeleteModal}>
+              <p>Are you sure you want to delete all appointments?</p>
+            </Modal>
             <h5 className="guestMode">Guest mode</h5>
             <TimeTable/>
           </div>
@@ -75,7 +139,12 @@ class Schedule extends Component {
           open={this.props.showModal}
           fixedFooter
           actions={[
-            <Button id="closeModal" key="close" onClick={this.closeModal}>Close</Button>,
+            <Button 
+              id="closeModal" 
+              key="close" 
+              onClick={this.closeModal}>
+              Close
+            </Button>,
             <Button 
               id="updateModal" 
               key="updateModal" 
@@ -84,7 +153,7 @@ class Schedule extends Component {
               {modalButtonText}
             </Button>
           ]}
-          modalOptions={{complete: this.closeModal}}>
+          modalOptions={{complete: this.closeModal, ready: this.validate}}>
           <Row>
             <Col l={6}>
               <Input
@@ -128,8 +197,9 @@ const mapStateToProps = (state) => ({
   appointments: state.appointments,
   appointmentNameValid: state.appointmentNameValid,
   phoneNumberValid: state.phoneNumberValid,
-  appointmentNameFormTouched: state.appointmentNameFormTouched,
-  appointmentPhoneNumberFormTouched: state.appointmentPhoneNumberFormTouched
+  showDeleteModal: state.showDeleteModal,
+  initialHour: state.initialHour,
+  endHour: state.endHour
 
 });
 

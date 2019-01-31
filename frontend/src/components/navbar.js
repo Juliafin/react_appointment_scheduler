@@ -1,20 +1,33 @@
 import React from 'react';
 import {Navbar, NavItem} from 'react-materialize';
 import {Link} from 'react-router-dom';
+import {connect} from 'react-redux';
+import {enableGuestMode} from './../actions/appointmentActions';
 import './navbar.css';
 
-const Nav = () => {
-
+const Nav = (props) => {
   return (
     <Navbar className="nav" brand='React Appointment Scheduler' left>
-      <NavItem onClick={() => console.log('test click')}>
+      <NavItem>
         <Link className="navLink" to="/">Home</Link>
       </NavItem>
       <NavItem href='components.html'>
-        <Link className="navLink" to="/schedule">Schedule</Link>
+        {
+          props.guestMode ?
+            <Link className="navLink" to="/schedule">Schedule</Link>
+            :
+            <Link onClick={() => props.dispatch(enableGuestMode())} className="navLink" to="/schedule">Guest</Link>
+        }
+          
       </NavItem>
+
     </Navbar>
   );
 };
 
-export default Nav;
+
+const mapStateToProps = (state) => ({
+  guestMode: state.guestMode
+});
+
+export default connect(mapStateToProps)(Nav);

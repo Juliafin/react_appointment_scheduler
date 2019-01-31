@@ -21,7 +21,8 @@
       "semi": [
           "error",
           "always"
-      ]
+      ],
+      "no-useless-escape": 0
   },
   "parserOptions": {
       "ecmaVersion": 2015

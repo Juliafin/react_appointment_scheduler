@@ -100,3 +100,70 @@ export const VALIDATE_APPOINTMENT_NAME = "VALIDATE APPOINTMENT NAME";
 export const validateAppointmentName = () => ({
   type: VALIDATE_APPOINTMENT_NAME
 });
+
+export const WRITE_APPOINTMENTS_CACHE = "WRITE APPOINTMENTS CACHE";
+export const writeAppointmentsCache = () => ({
+  type: WRITE_APPOINTMENTS_CACHE
+});
+
+export const RETRIEVE_APPOINTMENTS_CACHE = "RETRIEVE APPOINTMENTS CACHE";
+export const retrieveAppointmentsCache = () => ({
+  type: RETRIEVE_APPOINTMENTS_CACHE
+});
+
+export const RESET_APPOINTMENTS = "RESET APPOINTMENTS";
+export const resetAppointments = () => ({
+  type: RESET_APPOINTMENTS
+});
+
+export const SHOW_DELETE_CONFIRMATION_MODAL = "SHOW DELETE CONFIRMATION MODAL";
+export const showDeleteConfirmationModal = () => ({
+  type: SHOW_DELETE_CONFIRMATION_MODAL
+});
+
+export const HIDE_DELETE_CONFIRMATION_MODAL = "HIDE DELETE CONFIRMATION MODAL";
+export const hideDeleteConfirmationModal = () => ({
+  type: HIDE_DELETE_CONFIRMATION_MODAL
+});
+
+export const SET_REGISTRATION = "SET_REGISTRATION";
+export const setRegistration = () => ({
+  type: SET_REGISTRATION
+});
+
+export const UNSET_REGISTRATION = "UNSET_REGISTRATION";
+export const unsetRegistration = () => ({
+  type: UNSET_REGISTRATION
+});
+
+export const TOGGLE_REGISTRATION = "TOGGLE REGISTRATION";
+export const toggleRegistration = () => ({
+  type: TOGGLE_REGISTRATION
+});
+
+export const SET_PASSWORD = "SET PASSWORD";
+export const setPassword = (password) => ({
+  type: SET_PASSWORD,
+  password
+});
+
+export const SET_EMAIL = "SET EMAIL";
+export const setEmail = (email) => ({
+  type: SET_EMAIL,
+  email
+});
+
+export const VALIDATE_EMAIL = "VALIDATE EMAIL";
+export const validateEmail = () => ({
+  type: VALIDATE_EMAIL
+});
+
+export const VALIDATE_PASSWORD = "VALIDATE PASSWORD";
+export const validatePassword = () => ({
+  type: VALIDATE_PASSWORD
+});
+
+export const VALIDATE_SIGNIN_SIGNUP = "VALIDATE SIGNIN SIGNUP";
+export const validateSignInSignUp = () => ({
+  type: VALIDATE_SIGNIN_SIGNUP
+}); 

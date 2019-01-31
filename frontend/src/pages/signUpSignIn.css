@@ -1,0 +1,18 @@
+#signUpSignIn {
+  margin: 5vw auto 0 auto;
+  text-align: center
+}
+
+.choice {
+  font-size: 6vh;
+  margin-bottom: 2vh;
+}
+
+#password, #email {
+  width: 20vw;
+}
+
+#authSubmit {
+  background-color: #336b87;
+
+}

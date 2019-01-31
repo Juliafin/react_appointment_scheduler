@@ -1,33 +1,22 @@
 import React, { Component } from 'react';
 import {connect} from 'react-redux';
 import {Route, withRouter} from 'react-router-dom';
-import moment from 'moment';
 import Nav from './components/navbar';
 import Schedule from './pages/schedule';
+import SignUpSignIn from './pages/signUpSignIn';
 import Home from './pages/home';
 import {setAppointmentTimes} from './actions/appointmentActions';
+import generateTimes from './utils/generateSchedule';
 import './App.css';
 
 class App extends Component {
 
   componentDidMount() {
-    this.generateTimes();
+    let times = generateTimes(this.props.initialHour, this.props.endHour);
+    this.props.dispatch(setAppointmentTimes(times));
   }
 
-  generateTimes() {
-    const hours = [];
-    for(let hour = this.props.initialHour, i = 0; hour < this.props.endHour + 1; hour++, i++) {
-      hours.push({
-        appointmentTime: moment({ hour }).format('h:mm A'),
-        appointmentName: "+",
-        appointmentIndex: i,
-        appointmentPhoneNumber: "",
-        edited: false
-      });
-    }
-    console.log(hours);
-    this.props.dispatch(setAppointmentTimes(hours));
-  }
+  
 
 
   render() {
@@ -37,6 +26,8 @@ class App extends Component {
           <Nav/>
           <Route exact path="/" component={Home}/>
           <Route path="/schedule" component={Schedule}/>
+          <Route path="/:path(login|register)" component={SignUpSignIn}/>
+          {/* <Route path="/register" component={SignUpSignIn}/> */}
         </div>
       </div>
     );

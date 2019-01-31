@@ -15,6 +15,19 @@ import {
   CLEAR_CURRENT_APPOINTMENT,
   VALIDATE_PHONE_NUMBER,
   VALIDATE_APPOINTMENT_NAME,
+  RETRIEVE_APPOINTMENTS_CACHE,
+  WRITE_APPOINTMENTS_CACHE,
+  RESET_APPOINTMENTS,
+  SHOW_DELETE_CONFIRMATION_MODAL,
+  HIDE_DELETE_CONFIRMATION_MODAL,
+  SET_REGISTRATION,
+  UNSET_REGISTRATION,
+  TOGGLE_REGISTRATION,
+  SET_EMAIL,
+  SET_PASSWORD,
+  VALIDATE_EMAIL,
+  VALIDATE_PASSWORD,
+  VALIDATE_SIGNIN_SIGNUP
 } from '../actions/appointmentActions';
 
 export const initialState = {
@@ -29,7 +42,14 @@ export const initialState = {
   appointmentNameValid: false,
   phoneNumberValid: false,
   appointmentNameFormTouched: false,
-  appointmentPhoneNumberFormTouched: false
+  appointmentPhoneNumberFormTouched: false,
+  showDeleteModal: false,
+  registration: false,
+  password: "",
+  email: "",
+  emailValid: false,
+  passwordValid: false,
+  signInSignUpFormValid: false
 };
 
 export const appointmentReducer = (state=initialState, action) => {
@@ -125,6 +145,65 @@ export const appointmentReducer = (state=initialState, action) => {
     return Object.assign({}, state, {phoneNumberValid: phoneNumberValid.test(phoneNumber)});
   case VALIDATE_APPOINTMENT_NAME:
     return Object.assign({}, state, {appointmentNameValid: Boolean(state.currentAppointment.appointmentName)});
+  case RETRIEVE_APPOINTMENTS_CACHE:
+    if (state.guestMode) {
+      let cachedAppointments = JSON.parse(localStorage.getItem("guest"));
+      if (cachedAppointments) {
+        return Object.assign({}, state, {appointments: cachedAppointments});
+      }
+    }
+    return state;
+
+  case WRITE_APPOINTMENTS_CACHE:
+    if (state.guestMode) {
+      localStorage.setItem("guest", JSON.stringify(state.appointments));
+    }
+    return state;
+  case RESET_APPOINTMENTS:
+    if (state.guestMode) {
+      localStorage.setItem("guest", null);
+      return Object.assign({}, state, {apppointments: []});
+    }
+    return state;
+  case SHOW_DELETE_CONFIRMATION_MODAL:
+    if (state.guestMode) {
+      return Object.assign({}, state, {showDeleteModal: true});
+    }
+    return state;
+  case HIDE_DELETE_CONFIRMATION_MODAL:
+    if (state.guestMode) {
+      return Object.assign({}, state, {showDeleteModal: false});
+    }
+    return state;
+  case SET_REGISTRATION:
+    return Object.assign({}, state, {registration: true});
+  case UNSET_REGISTRATION:
+    return Object.assign({}, state, {registration: false});
+  case TOGGLE_REGISTRATION:
+    return Object.assign({}, state, {registration: !state.registration});
+  case SET_PASSWORD:
+    return Object.assign({}, state, {password: action.password});
+  case SET_EMAIL:
+    return Object.assign({}, state, {email: action.email});
+  case VALIDATE_EMAIL:
+    const emailValid = new RegExp(/^.+@{1}.+\.[a-zA-Z]{2,4}$/);
+    
+    if (emailValid.test(state.email)) {
+      return Object.assign({}, state, {emailValid: true});
+    }
+    return Object.assign({}, state, {emailValid: false});
+
+  case VALIDATE_PASSWORD:
+    const passwordValid = new RegExp(/((?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[@#$?%!/\{\}\[\]\(\)]).{6,20})/);
+    if (passwordValid.test(state.password)) {
+      return Object.assign({}, state, {passwordValid: true});
+    }
+    return Object.assign({}, state, {passwordValid: false});
+  case VALIDATE_SIGNIN_SIGNUP:
+    if (state.emailValid && state.passwordValid) {
+      return Object.assign({}, state, {signInSignUpFormValid: true});
+    }
+    return Object.assign({}, state, {signInSignUpFormValid: false});
   default:
     return state;
   }

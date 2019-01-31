@@ -9,6 +9,34 @@
 }
 
 .headerContainer{
-  background-color: #white;
+  background-color: white;
   min-height: 100vh;
+}
+
+@keyframes displayElement {
+  from {
+    opacity: 0;
+    transform: translateY(100px);
+    -webkit-transform: translateY(100px);
+    -moz-transform: translateY(100px);
+    -ms-transform: translateY(100px);
+    -o-transform: translateY(100px);
+}
+  to {
+    opacity: (1);
+    transform: translateY(0);
+    -webkit-transform: translateY(0);
+    -moz-transform: translateY(0);
+    -ms-transform: translateY(0);
+    -o-transform: translateY(0);
+}
+}
+
+.slowPopIn {
+  animation-name: displayElement;
+  animation-duration: 300ms;
+  animation-timing-function: ease-in-out;
+  animation-iteration-count: 1;
+  animation-fill-mode: forwards;
+  animation-direction: normal
 }
