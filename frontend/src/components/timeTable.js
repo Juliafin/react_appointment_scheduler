@@ -8,6 +8,7 @@ import {
   setCurrentAppointmentName, 
   setCurrentAppointmentIndex,
   setCurrentAppointmentTime,
+  setCurrentAppointmentEditedState,
   setAppointmentTimes
 } from '../actions/appointmentActions';
 
@@ -24,29 +25,26 @@ class TimeTable extends Component {
 
   generateTimes() {
     const hours = [];
-    console.log('this props', this.props);
     for(let hour = this.props.initialHour, i = 0; hour < this.props.endHour + 1; hour++, i++) {
       hours.push({
         appointmentTime: moment({ hour }).format('h:mm A'),
-        appointmentName: "This is a test",
+        appointmentName: "+",
         appointmentIndex: i,
         edited: false
       });
-      console.log('inside loop');
     }
-    console.log(hours);
+    // console.log(hours);
     this.props.dispatch(setAppointmentTimes(hours));
   }
 
   appointmentClick(event) {
-    console.log('This is the event', event.target);
     let index = parseInt(event.target.getAttribute("index"));
     let appointmentName = this.props.appointments[index].appointmentName;
     let appointmentTime = this.props.appointments[index].appointmentTime;
-    console.log(appointmentName, appointmentTime);
     this.props.dispatch(setCurrentAppointmentTime(appointmentTime));
     this.props.dispatch(setCurrentAppointmentName(appointmentName));
     this.props.dispatch(setCurrentAppointmentIndex(index));
+    this.props.dispatch(setCurrentAppointmentEditedState(index))
     this.props.dispatch(showModal());
 
   }
@@ -61,6 +59,7 @@ class TimeTable extends Component {
             appointmentTime={appt.appointmentTime} 
             appointmentName={appt.appointmentName}
             appointmentIndex={appt.appointmentIndex}
+            edited={appt.edited}
             onClick={this.appointmentClick}/>
         );
       });

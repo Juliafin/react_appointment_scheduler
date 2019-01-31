@@ -17,7 +17,6 @@
 .appointmentBody {
   height: 8vh;
   font-size: 4vh;
-  background-color: #336B87;
   border-radius: 2px;
   -webkit-border-radius: 2px;
   -moz-border-radius: 2px;
@@ -31,6 +30,14 @@
   -moz-transition: background-color 500ms;
   -ms-transition: background-color 500ms;
   -o-transition: background-color 500ms;
+}
+
+.newAppointment {
+  background-color: #336B87;
+}
+
+.editedAppointment {
+  background-color: #763626;
 }
 
 .appointmentBody:hover {

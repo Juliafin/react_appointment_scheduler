@@ -7,6 +7,8 @@ import {
   SET_CURRENT_APPOINTMENT_NAME,
   SET_CURRENT_APPOINTMENT_TIME,
   SET_CURRENT_APPOINTMENT_INDEX,
+  SET_CURRENT_APPOINTMENT_EDIT_STATE,
+  SET_APPOINTMENT_EDITED,
   SET_APPOINTMENT_TIMES,
   UPDATE_APPOINTMENT,
   CLEAR_CURRENT_APPOINTMENT
@@ -42,8 +44,7 @@ export const appointmentReducer = (state=initialState, action) => {
       {
         currentAppointment: 
         {
-          appointmentTime: state.currentAppointment.appointmentTime, 
-          appointmentIndex: state.currentAppointment.appointmentIndex,
+          ...state.currentAppointment,
           appointmentName: action.appointmentName
         }
       }
@@ -54,44 +55,56 @@ export const appointmentReducer = (state=initialState, action) => {
       state, {
         currentAppointment: {
           appointmentTime: action.appointmentTime, 
-          appointmentName: state.currentAppointment.appointmentName,
-          appointmentIndex: state.currentAppointment.appointmentIndex
+          ...state.currentAppointment
         }
       });
   case SET_CURRENT_APPOINTMENT_INDEX:
-    console.log('inside set appointment index!', action);
-    let S = Object.assign(
+    return Object.assign(
       {},
       state,
       {
         currentAppointment: {
-          appointmentTime: state.currentAppointment.appointmentTime,
-          appointmentName: state.currentAppointment.appointmentName,
+          ...state.currentAppointment,
           appointmentIndex: action.appointmentIndex
         }
       }
     );
-    console.log(S, 'STATTTTTTTTTTTTTE');
-    return S;
   case UPDATE_APPOINTMENT:
     if (!state.currentAppointment.appointmentName) {
       return state;
     }
-    let appointments = state.appointments.map((appt, index) => {
-      console.log(state.currentAppointment.appointmentIndex, 'current index inside appointments map');
-      if (index === state.currentAppointment.appointmentIndex) {
-        return state.currentAppointment;
-      } else {
-        return appt;
-      }
-      
-      
+    let updatedAppointments = state.appointments.slice();
+    updatedAppointments[state.currentAppointment.appointmentIndex] = state.currentAppointment;
+    if (!state.currentAppointment.edited) {
+      state.currentAppointment.edited = true;
+    }
+    console.log(state.currentAppointment, 'state current appointment in update appointment')
+    return Object.assign({}, state, {
+      appointments: updatedAppointments,
+      currentAppointment: {...state.currentAppointment}
     });
-    console.log('inside update appointment!');
-    console.log(appointments);
-    return Object.assign({}, state, {appointments});
   case CLEAR_CURRENT_APPOINTMENT:
     return Object.assign({}, state, {currentAppointment: {}});
+  case SET_APPOINTMENT_EDITED:
+
+    let appointments = state.appointments.slice();
+    appointments[state.currentAppointment.appointmentIndex].edited = true;
+
+    return Object.assign({}, state, {appointments});
+  
+  case SET_CURRENT_APPOINTMENT_EDIT_STATE:
+    console.log('state inside current appointment edit state', state);
+    console.log('action in current appointment edit state', action)
+    return Object.assign(
+      {},
+      state,
+      {
+        currentAppointment: {
+          ...state.currentAppointment,
+          edited: state.appointments[action.appointmentIndex].edited
+        }
+      }
+    );
   default:
     return state;
     

@@ -15,7 +15,7 @@ export const getIpInfo = () => (dispatch) => {
   let BASE_URL = 'http://73.43.238.115:9001/api/ip';
   axios.get(BASE_URL)
     .then((response) => {
-      console.log(response);
+      // console.log(response);
       if (response.status === 200 && response.data.ipData.status !== 'fail') {
         return dispatch(getIpInfoSuccess(response.data.ipData));
       }
@@ -80,4 +80,10 @@ export const clearAppointment = () => ({
 export const SET_APPOINTMENT_EDITED = "SET APPOINTMENT EDITED";
 export const setAppointmentEdited = () => ({
   type: SET_APPOINTMENT_EDITED
+});
+
+export const SET_CURRENT_APPOINTMENT_EDIT_STATE = "SET CURRENT APPOINTMENT EDITED";
+export const setCurrentAppointmentEditedState = (index) => ({
+  type:SET_CURRENT_APPOINTMENT_EDIT_STATE,
+  appointmentIndex: index
 });

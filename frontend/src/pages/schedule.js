@@ -6,7 +6,8 @@ import {
   hideModal, 
   setCurrentAppointmentName,
   updateAppointment,
-  clearAppointment
+  clearAppointment,
+  setAppointmentEdited
 } from './../actions/appointmentActions';
 import TimeTable from './../components/timeTable';
 import './schedule.css';
@@ -23,12 +24,13 @@ class Schedule extends Component {
 
   closeModal() {
     this.props.dispatch(hideModal());
-    this.props.dispatch(clearAppointment());
+    // this.props.dispatch(clearAppointment());
   }
   
   closeModalAndUpdate() {
     this.props.dispatch(hideModal());
     this.props.dispatch(updateAppointment());
+    this.props.dispatch(setAppointmentEdited());
 
   }
 
@@ -40,12 +42,10 @@ class Schedule extends Component {
 
   updateApptName(event) {
     let name = event.target.value;
-    console.log('name on change', name);
     this.props.dispatch(setCurrentAppointmentName(name));
   }
 
   updateAppointment() {
-    console.log(this.props.currentAppointment, 'this props current appointment inside update appointment')
     this.props.dispatch(updateAppointment());
   }
 
@@ -53,6 +53,9 @@ class Schedule extends Component {
     
   
   render() {
+    console.log(this.props.currentAppointment, 'this props current appointment in schedule js render')
+    let modalHeader = this.props.currentAppointment.edited ? 'Update Appointment Details' : 'Create Appointment';
+    let modalButtonText = this.props.currentAppointment.edited ? 'Update' : 'Create';
     return (
       <div>
         {this.props.guestMode ? (
@@ -65,12 +68,12 @@ class Schedule extends Component {
         }
 
         <Modal
-          header='Update Appointment Details'
+          header={modalHeader}
           open={this.props.showModal}
           fixedFooter
           actions={[
             <Button id="closeModal" key="close" onClick={this.closeModal}>Close</Button>,
-            <Button id="updateModal" key="updateModal" onClick={this.closeModalAndUpdate}>Update</Button>
+            <Button id="updateModal" key="updateModal" onClick={this.closeModalAndUpdate}>{modalButtonText}</Button>
           ]}
           modalOptions={{complete: this.closeModal}}>
           <Row>
@@ -79,8 +82,9 @@ class Schedule extends Component {
               id="appointmentName"
               onLabel="test"
               offLabel="hello"
+              placeHolder={this.props.currentAppointment.appointmentName === '+' ? 'Enter an appointment' : ''}
               defaultValue={this.props.currentAppointment.appointmentName}
-              value={this.props.currentAppointment.appointmentName}
+              value={this.props.currentAppointment.appointmentName === '+' ? '' : this.props.currentAppointment.appointmentName}
               onChange={this.updateApptName}>
             </Input>
           </Row>
