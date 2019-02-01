@@ -2,7 +2,7 @@ import React, {Component} from 'react';
 import {connect} from 'react-redux';
 import {Button} from 'react-materialize';
 import {Link} from 'react-router-dom';
-import {enableGuestMode} from './../actions/appointmentActions';
+import {enableGuestMode, checkTokenAndUserExists} from './../actions/appointmentActions';
 import './home.css';
 import {getIpInfo} from './..//actions/appointmentActions';
 
@@ -13,6 +13,7 @@ class Home extends Component {
     this.guestMode = this.guestMode.bind(this);
   }
   componentDidMount() {
+    this.props.dispatch(checkTokenAndUserExists());
     if (!this.props.ipData) {
       this.props.dispatch(getIpInfo());
     }

@@ -2,7 +2,26 @@ import axios from 'axios';
 import history from './../history';
 
 // TODO Get appointments
-export const GET_APPOINTMENTS = "GET APPOINTMENTS";
+export const GET_APPOINTMENTS_SUCCESS = "GET APPOINTMENTS SUCCESS";
+
+export const getAppointmentsSuccess = () => ({
+  type: GET_APPOINTMENTS_SUCCESS
+});
+
+export const getAppointments = (token) => (dispatch) => {
+  const GET_APPOINTMENTS_ENDPOINT = "/api/appointments";
+  let headers = {'Authorization': `bearer ${token}`};
+  console.log('Inside appointments!');
+  axios.get(GET_APPOINTMENTS_ENDPOINT, {}, {headers})
+    .then((response) => {
+      console.log(response.data);
+    })
+    .catch((error) => {
+      console.log(error);
+    });
+
+};
+
 
 
 export const CHECK_TOKEN_AND_USER_EXISTS = "CHECK TOKEN";
