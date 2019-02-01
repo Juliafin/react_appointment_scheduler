@@ -22,4 +22,18 @@
 
 5. Open (http://localhost:9001) in the browser.
 
-6. If all else fails, view the live version at: (Link to be updated!/)!
+6. If all else fails, view the live version at: (https://react-appointment-scheduler.herokuapp.com/)
+!
+
+
+## Screenshots
+
+
+
+### Main Page: 
+
+![Dashboard Screenshot]((https://github.com/Juliafin/react_appointment_scheduler/blob/master/docs/react_appointment_scheduler.JPG)
+
+### Integration Tests:
+
+![Form Screenshot](https://github.com/Juliafin/react_appointment_scheduler/blob/master/docs/Integration%20tests.JPG))
