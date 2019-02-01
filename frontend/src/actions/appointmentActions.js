@@ -17,7 +17,7 @@ export const authenticateUserSuccess = ({
 
 
 export const authenticateUser = (token) => (dispatch) => {
-  let AUTH_ENDPOINT = "http://localhost:9001/auth/authenticate";
+  let AUTH_ENDPOINT = "/auth/authenticate";
   let headers = {'Authorization': `bearer ${token}`};
 
   axios.post(AUTH_ENDPOINT, {}, {headers})
@@ -37,7 +37,7 @@ export const registerUserSuccess = (token, email, _id) => ({
 });
 
 export const registerUser = (email, password) => (dispatch) => {
-  let REGISTER_ENDPOINT = "http://localhost:9001/auth/register";
+  let REGISTER_ENDPOINT = "/auth/register";
   axios.post(REGISTER_ENDPOINT, {email, password})
     .then((response) => {
       console.log(response);
@@ -55,15 +55,28 @@ export const registerUser = (email, password) => (dispatch) => {
     });
 };
 
+export const LOGIN_USER_SUCCESS = "LOGIN USER SUCCESS";
+export const loginUserSuccess = () => ({
+  type: LOGIN_USER_SUCCESS
+});
 
-let BASE_URL_2 = 'http://localhost:9001/api/ip';
+
+export const loginUser = (email, password) => (dispatch) => {
+  let LOGIN_ENDPOINT = '/auth/login';
+  axios.post(LOGIN_ENDPOINT, {email, password})
+    .then((response) => {
+      console.log(response);
+      return dispatch(loginUserSuccess());
+    });
+};
+
 export const GET_IP_INFO_SUCCESS = "GET_IP_INFO_SUCCESS";
 export const getIpInfoSuccess = (ipData) => ({
   type: GET_IP_INFO_SUCCESS,
   ipData
 });
 export const getIpInfo = () => (dispatch) => {
-  let BASE_URL = 'http://73.43.238.115:9001/service/ip';
+  let BASE_URL = '/service/ip';
   axios.get(BASE_URL)
     .then((response) => {
       // console.log(response);
