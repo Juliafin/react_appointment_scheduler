@@ -30,7 +30,8 @@ import {
   VALIDATE_SIGNIN_SIGNUP,
   CHECK_TOKEN_AND_USER_EXISTS,
   REGISTER_USER_SUCCESS,
-  AUTHENTICATE_USER_SUCCESS
+  AUTHENTICATE_USER_SUCCESS,
+  LOGIN_USER_SUCCESS
 } from '../actions/appointmentActions';
 
 export const initialState = {
@@ -253,6 +254,11 @@ export const appointmentReducer = (state=initialState, action) => {
     console.log('LOCAL STORAGE IN REGISTER USER SUCCESS')
     return Object.assign({}, state, {currentUserAuthenticated: true});
   case AUTHENTICATE_USER_SUCCESS:
+    return Object.assign({}, state, {currentUserAuthenticated: true});
+  case LOGIN_USER_SUCCESS:
+    localStorage.setItem("token", action.token);
+    localStorage.setItem("userEmail", action.email);
+    localStorage.setItem("userID", action._id);
     return Object.assign({}, state, {currentUserAuthenticated: true});
   default:
     return state;

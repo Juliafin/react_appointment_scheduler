@@ -56,18 +56,30 @@ export const registerUser = (email, password) => (dispatch) => {
 };
 
 export const LOGIN_USER_SUCCESS = "LOGIN USER SUCCESS";
-export const loginUserSuccess = () => ({
-  type: LOGIN_USER_SUCCESS
+export const loginUserSuccess = (email, id, token) => ({
+  type: LOGIN_USER_SUCCESS,
+  email,
+  id,
+  token
 });
 
 
 export const loginUser = (email, password) => (dispatch) => {
-  let LOGIN_ENDPOINT = '/auth/login';
+  let baseURL = "http://localhost:9001";
+  let LOGIN_ENDPOINT = baseURL + '/auth/login';
   axios.post(LOGIN_ENDPOINT, {email, password})
     .then((response) => {
       console.log(response);
-      return dispatch(loginUserSuccess());
-    });
+      if (response.data.message === "Successfully logged in") {
+        let {email, _id} = response.data.loggedInUser;
+        let {userToken} = response.data;
+        history.push('/schedule');
+        return dispatch(loginUserSuccess(email, _id, userToken));
+      }
+    })
+    .catch((error) => {
+      console.log(error);
+    })
 };
 
 export const GET_IP_INFO_SUCCESS = "GET_IP_INFO_SUCCESS";
