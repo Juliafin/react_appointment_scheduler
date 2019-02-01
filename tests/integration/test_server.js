@@ -28,7 +28,6 @@ describe('Testing main server endpoints', () => {
   
   it('/test', async() => {
     let response = await chai.request(app).get('/test');
-    console.log(response.body);
     expect(response).to.be.a('object');
     expect(response).to.haveOwnProperty('body');
     expect(response.body).to.be.a('object');   

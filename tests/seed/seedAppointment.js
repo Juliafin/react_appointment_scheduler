@@ -8,6 +8,7 @@ const generateAppointments = (len, userID) => {
     let appointment = {
       date: faker.date.recent().toISOString(),
       appointmentName: faker.company.bsAdjective() + ' ' + faker.company.bsNoun(),
+      appointmentPhoneNumber: faker.phone.phoneNumber("###-###-####"),
       user: userID 
     };
     appointments.push(appointment);
@@ -17,5 +18,7 @@ const generateAppointments = (len, userID) => {
   return appointments;
 };
 
+
+// console.log(generateAppointments(3));
 
 module.exports = generateAppointments;

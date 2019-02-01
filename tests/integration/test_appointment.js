@@ -26,7 +26,6 @@ describe('Testing Appointment model', (done) => {
     await Appointment.create(appointments);
 
     let appointmentCount = await Appointment.count();
-    console.log(appointmentCount, 'APOINTMENTS IN DB');
     expect(appointmentCount).to.equal(appointments.length);
   });
 

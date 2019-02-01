@@ -13,10 +13,10 @@ console.log(MONGO_URL, 'mongo URL IN TEST USER');
 describe('Testing user model', (done) => {
   before(() => connectMongoose(MONGO_URL));
   after(() => {mongoose.disconnect();});
-  // afterEach(() => {
-  //   User.deleteMany()
-  //     .then(done, done);
-  // });
+  afterEach(() => {
+    User.deleteMany()
+      .then(done, done);
+  });
   
   it('Writes to the database successfully', async() => {
     let user = makeUsers(1, true)[0];
