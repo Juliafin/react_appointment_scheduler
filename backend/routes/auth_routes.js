@@ -70,6 +70,8 @@ authRouter.post('/login', async(req, res) => {
     if (passwordValid) {
       let userToken = jsonWebToken.sign({user:userFound}, SECRET);
       return res.json({message: "Successfully logged in", userToken, loggedInUser: userFound.showUser()});
+    } else {
+      return res.status(401).json({message: "Unauthorized"})
     }
   } catch(error) {
     console.log('There was an error', error)
@@ -81,9 +83,9 @@ authRouter.post('/login', async(req, res) => {
 
 authRouter.post('/authenticate', expressJWT({secret: SECRET}), (req, res) => {
 
-  console.log(req.user);
-  if(req.user._id) {
-    return res.json({userID: req.user._id});
+  console.log(req.user, 'INSIDE AUTHENTICATE', req.user);
+  if(req.user.user._id) {
+    return res.json({userID: req.user.user._id});
   } else {
     return res.status(400).json({message: "User could not be authenticated"});
   }
