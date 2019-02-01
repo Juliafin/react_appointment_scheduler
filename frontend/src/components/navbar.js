@@ -6,6 +6,7 @@ import {enableGuestMode} from './../actions/appointmentActions';
 import './navbar.css';
 
 const Nav = (props) => {
+  console.log('props in nav', props);
   return (
     <Navbar className="nav" brand='React Appointment Scheduler' left>
       <NavItem>
@@ -13,7 +14,7 @@ const Nav = (props) => {
       </NavItem>
       <NavItem href='components.html'>
         {
-          props.guestMode ?
+          props.currentUserAuthenticated | props.guestMode ?
             <Link className="navLink" to="/schedule">Schedule</Link>
             :
             <Link onClick={() => props.dispatch(enableGuestMode())} className="navLink" to="/schedule">Guest</Link>
@@ -27,7 +28,8 @@ const Nav = (props) => {
 
 
 const mapStateToProps = (state) => ({
-  guestMode: state.guestMode
+  guestMode: state.guestMode,
+  currentUserAuthenticated: state.currentUserAuthenticated
 });
 
 export default connect(mapStateToProps)(Nav);

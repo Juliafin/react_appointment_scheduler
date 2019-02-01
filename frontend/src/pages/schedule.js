@@ -38,7 +38,11 @@ class Schedule extends Component {
   }
 
   componentDidMount() {
-    this.props.dispatch(retrieveAppointmentsCache());
+    if (this.props.guestMode) {
+      this.props.dispatch(retrieveAppointmentsCache());
+    } else {
+      this.props.dispatch(setAppointmentTimes(generateTimes(this.props.initialHour, this.props.endHour)));
+    }
   }
 
   closeModal() {
@@ -100,39 +104,46 @@ class Schedule extends Component {
     let modalButtonText = this.props.currentAppointment.edited ? 'Update' : 'Create';
     return (
       <div className="slowPopIn">
-        {this.props.guestMode ? (
-          <div className="scheduleContainer">
-            <Button 
-              id="appointmentReset"
-              waves="red"
-              onClick={this.showConfirmationModal}>Reset Appointments
-            </Button>
-            <Modal
-              header="Delete Appointments"
-              modalOptions={{complete: this.closeConfirmationModal}}
-              actions={[
-                <Button 
-                  key="close" 
-                  onClick={this.closeConfirmationModal}
-                  waves="red"
-                  id="closeConfirmationModal"
-                >Close</Button>,
-                <Button 
-                  key="confirm"
-                  onClick={this.deleteAppointments}
-                  waves="green"
-                  id="confirmConfirmationModal"
-                >Confirm</Button>
-              ]}
-              open={this.props.showDeleteModal}>
-              <p>Are you sure you want to delete all appointments?</p>
-            </Modal>
-            <h5 className="guestMode">Guest mode</h5>
-            <TimeTable/>
-          </div>
-        ):
-          <div style={{color:'white'}}>You are not in guest mode!</div>
-        }
+        <div className="scheduleContainer">
+          {this.props.guestMode ? (
+            <div className="guestModeContainer">
+              <Button 
+                id="appointmentReset"
+                waves="red"
+                onClick={this.showConfirmationModal}>Reset Appointments
+              </Button>
+              <Modal
+                header="Delete Appointments"
+                modalOptions={{complete: this.closeConfirmationModal}}
+                actions={[
+                  <Button 
+                    key="close" 
+                    onClick={this.closeConfirmationModal}
+                    waves="red"
+                    id="closeConfirmationModal">
+                  Close
+                  </Button>,
+                  <Button 
+                    key="confirm"
+                    onClick={this.deleteAppointments}
+                    waves="green"
+                    id="confirmConfirmationModal">
+                  Confirm
+                  </Button>
+                ]}
+                open={this.props.showDeleteModal}>
+                <p>Are you sure you want to delete all appointments?</p>
+              </Modal>
+              <h5 className="guestMode">Guest mode</h5>
+              <TimeTable/>
+            </div>
+          ):
+            <div className="authenticated">
+              <p>Welcome {this.props.currentUserEmail ? this.props.currentUserEmail : ''}</p>
+              <TimeTable/>
+            </div>
+          }
+        </div>
 
         <Modal
           header={modalHeader}
@@ -199,7 +210,11 @@ const mapStateToProps = (state) => ({
   phoneNumberValid: state.phoneNumberValid,
   showDeleteModal: state.showDeleteModal,
   initialHour: state.initialHour,
-  endHour: state.endHour
+  endHour: state.endHour,
+  currentUserAuthenticated: state.currentUserAuthenticated,
+  currentUserToken: state.currentUserToken,
+  currentUserID: state.currentUserID,
+  currentUserEmail: state.currentUserEmail
 
 });
 

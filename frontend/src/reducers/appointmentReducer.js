@@ -27,11 +27,17 @@ import {
   SET_PASSWORD,
   VALIDATE_EMAIL,
   VALIDATE_PASSWORD,
-  VALIDATE_SIGNIN_SIGNUP
+  VALIDATE_SIGNIN_SIGNUP,
+  CHECK_TOKEN_AND_USER_EXISTS,
+  REGISTER_USER_SUCCESS,
+  AUTHENTICATE_USER_SUCCESS
 } from '../actions/appointmentActions';
 
 export const initialState = {
+  currentUserAuthenticated: false,
   currentUserID: '',
+  currentUserToken: '',
+  currentUserEmail: '',
   appointments: [],
   guestMode: false,
   ipAvailable: false,
@@ -56,14 +62,19 @@ export const appointmentReducer = (state=initialState, action) => {
   switch(action.type) {
   case ENABLE_GUEST_MODE:
     return Object.assign({}, state, {guestMode: true});
+
   case GET_IP_INFO_SUCCESS:
     return Object.assign({}, state, {ipData: action.ipData});
+
   case SHOW_MODAL:
     return Object.assign({}, state, {showModal: true});
+
   case HIDE_MODAL:
     return Object.assign({}, state, {showModal: false});
+  
   case SET_APPOINTMENT_TIMES:
     return Object.assign({}, state, {appointments: action.appointments});
+
   case SET_CURRENT_APPOINTMENT_NAME:
     return Object.assign(
       {}, 
@@ -76,6 +87,7 @@ export const appointmentReducer = (state=initialState, action) => {
         }
       }
     );
+
   case SET_CURRENT_APPOINTMENT_TIME:
     return Object.assign(
       {}, 
@@ -85,6 +97,7 @@ export const appointmentReducer = (state=initialState, action) => {
           appointmentTime: action.appointmentTime, 
         }
       });
+
   case SET_CURRENT_APPOINTMENT_PHONE_NUMBER:
     return Object.assign(
       {},
@@ -95,6 +108,7 @@ export const appointmentReducer = (state=initialState, action) => {
         }
       }
     );
+
   case SET_CURRENT_APPOINTMENT_INDEX:
     return Object.assign(
       {},
@@ -106,6 +120,7 @@ export const appointmentReducer = (state=initialState, action) => {
         }
       }
     );
+
   case UPDATE_APPOINTMENT:
     if (!state.currentAppointment.appointmentName) {
       return state;
@@ -119,8 +134,10 @@ export const appointmentReducer = (state=initialState, action) => {
       appointments: updatedAppointments,
       currentAppointment: {...state.currentAppointment}
     });
+
   case CLEAR_CURRENT_APPOINTMENT:
     return Object.assign({}, state, {currentAppointment: {}});
+
   case SET_APPOINTMENT_EDITED:
 
     let appointments = state.appointments.slice();
@@ -139,12 +156,15 @@ export const appointmentReducer = (state=initialState, action) => {
         }
       }
     );
+
   case VALIDATE_PHONE_NUMBER:
     let phoneNumber = state.currentAppointment.appointmentPhoneNumber;
     let phoneNumberValid = new RegExp(/^\d{3}-\d{3}-\d{4}$/);
     return Object.assign({}, state, {phoneNumberValid: phoneNumberValid.test(phoneNumber)});
+
   case VALIDATE_APPOINTMENT_NAME:
     return Object.assign({}, state, {appointmentNameValid: Boolean(state.currentAppointment.appointmentName)});
+
   case RETRIEVE_APPOINTMENTS_CACHE:
     if (state.guestMode) {
       let cachedAppointments = JSON.parse(localStorage.getItem("guest"));
@@ -159,32 +179,41 @@ export const appointmentReducer = (state=initialState, action) => {
       localStorage.setItem("guest", JSON.stringify(state.appointments));
     }
     return state;
+
   case RESET_APPOINTMENTS:
     if (state.guestMode) {
       localStorage.setItem("guest", null);
       return Object.assign({}, state, {apppointments: []});
     }
     return state;
+
   case SHOW_DELETE_CONFIRMATION_MODAL:
     if (state.guestMode) {
       return Object.assign({}, state, {showDeleteModal: true});
     }
     return state;
+
   case HIDE_DELETE_CONFIRMATION_MODAL:
     if (state.guestMode) {
       return Object.assign({}, state, {showDeleteModal: false});
     }
     return state;
+
   case SET_REGISTRATION:
     return Object.assign({}, state, {registration: true});
+
   case UNSET_REGISTRATION:
     return Object.assign({}, state, {registration: false});
+
   case TOGGLE_REGISTRATION:
     return Object.assign({}, state, {registration: !state.registration});
+
   case SET_PASSWORD:
     return Object.assign({}, state, {password: action.password});
+
   case SET_EMAIL:
     return Object.assign({}, state, {email: action.email});
+
   case VALIDATE_EMAIL:
     const emailValid = new RegExp(/^.+@{1}.+\.[a-zA-Z]{2,4}$/);
     
@@ -199,11 +228,32 @@ export const appointmentReducer = (state=initialState, action) => {
       return Object.assign({}, state, {passwordValid: true});
     }
     return Object.assign({}, state, {passwordValid: false});
+
   case VALIDATE_SIGNIN_SIGNUP:
     if (state.emailValid && state.passwordValid) {
       return Object.assign({}, state, {signInSignUpFormValid: true});
     }
     return Object.assign({}, state, {signInSignUpFormValid: false});
+  
+  case CHECK_TOKEN_AND_USER_EXISTS:
+    let token = localStorage.getItem('token');
+    let currentUserID = localStorage.getItem('userID');
+    let email = localStorage.getItem("userEmail");
+    console.log(token, currentUserID, email, 'INSIDE CHECK TOKEN REDUCER');
+    if (token && currentUserID && email) {
+      console.log('EVERYTHING EXISTS IN LOCAL STORAGE')
+      return Object.assign(
+        {}, state, {currentUserID, currentUserToken: token, currentUserEmail: email});
+    }
+    return state;
+  case REGISTER_USER_SUCCESS:
+    localStorage.setItem("token", action.token);
+    localStorage.setItem("userEmail", action.email);
+    localStorage.setItem("userID", action._id);
+    console.log('LOCAL STORAGE IN REGISTER USER SUCCESS')
+    return Object.assign({}, state, {currentUserAuthenticated: true});
+  case AUTHENTICATE_USER_SUCCESS:
+    return Object.assign({}, state, {currentUserAuthenticated: true});
   default:
     return state;
   }

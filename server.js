@@ -7,7 +7,7 @@ const {PORT, MONGO_URL} = require('./config');
 const htmlRouter = require('./backend/routes/html_routes');
 const apiRouter = require('./backend/routes/api_routes');
 const authRouter = require('./backend/routes/auth_routes');
-
+const serviceRouter = require('./backend/routes/service_routes');
 const app = express();
 let server;
 
@@ -28,6 +28,7 @@ app.use(express.static(buildFolder));
 
 app.use('/api', apiRouter);
 app.use('/auth', authRouter);
+app.use('/service', serviceRouter);
 app.use(htmlRouter);
 
 

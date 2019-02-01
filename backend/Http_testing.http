@@ -1,0 +1,98 @@
+GET http://localhost:9001/api/appointments
+Content-Type: application/json
+
+  {
+    "userID": "hi"
+  }
+
+
+###
+
+GET http://localhost:9001/api/appointments
+Content-Type: application/json
+
+  {
+    "userID": "5c4e2f64f67ca7164405712a"
+  }
+
+###
+POST http://localhost:9001/api/addAppointment
+Content-Type: application/json
+
+  {
+    "userID": "5c4e2f64f67ca7164405712a",
+    "appointment": {
+      "appointmentName": "Working on this app!"
+    }
+  }
+
+###
+POST http://localhost:9001/auth/login
+Content-Type: application/json
+
+  {
+    "email": "hello@gmail.com",
+    "password": "1572831k"
+  }
+
+
+###
+POST http://localhost:9001/auth/register
+Content-Type: application/json
+
+  {
+    "email": "hellotest5@gmail.com",
+    "password": "1572831k"
+  }
+
+
+###
+POST http://localhost:9001/auth/login
+Content-Type: application/json
+
+  {
+    "email": "hellotest3@gmail.com",
+    "password": "1572831k"
+  }
+
+
+### Valid Request
+POST http://localhost:9001/auth/authenticate
+Authorization: bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjp7ImFwcG9pbnRtZW50cyI6W10sIl9pZCI6IjVjNTM5ZjBhZmQ5MDk2YTkyMzA5MDYxZiIsImVtYWlsIjoiaGVsbG90ZXN0NUBnbWFpbC5jb20iLCJwYXNzd29yZCI6IiQyYSQxMCRobWN3Y2syMlBGOFNjdFJ1dXVlTjguc3I3MFlBOTJKUy4zZ0kwTkdpYUR6YmQ0QlgxZlg0bSIsIl9fdiI6MH0sImlhdCI6MTU0ODk4NDA3NH0.Y4QUydWM-s04It1TxBN4N0ASbB5ib6i11DYPmhRB9e0
+
+
+### Invalid request
+POST http://localhost:9001/auth/authenticate
+Authorization: bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyRm91bmQiOnsiYXBwb2ludG1lbnRzIjpbXSwiX2lkIjoiNWM1MzU4YzdhNdzZmYjdiZDA1MWZjZDNjIiwiZW1haWwiOiJoZWxsb3Rlc3QyQGdtYWlsLmNvbSIsInBhc3N3b3JkIjoiJDJhJDEwJFkvZ0JYY2VtcW9QYU9kRXl0Mjk1NnVPY1dHa0NtUDhmUk9UVlgycWZSOWR5VmIyTnZ6TGpDIiwiX192IjowfSwiaWF0IjoxNTQ4OTY2NTE1fQ.nBhdB7XRNhR3wX-GV3-hbfQhm-oLuyW-XkkDydMloA0
+
+
+### Valid Request
+GET http://localhost:9001/api/appointments
+Authorization: bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjp7ImFwcG9pbnRtZW50cyI6W10sIl9pZCI6IjVjNTM2YTBkNzIwYjdmMmIzNTAzZTUxYyIsImVtYWlsIjoiaGVsbG90ZXN0M0BnbWFpbC5jb20iLCJwYXNzd29yZCI6IiQyYSQxMCRYa05sUXJ0QnoxMVM2VHZPbnh2QU51ZlhBUThxbHY5OGFZejhtYUZuV1VoTktQQTFSNTlHNiIsIl9fdiI6MH0sImlhdCI6MTU0ODk3MDUwOX0.tTC5kcfcHjxOULvx-zuGo1U8qqH5j2C_5QWhtL_ucT4
+
+
+### Valid Request
+POST http://localhost:9001/api/addAppointment
+Authorization: bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjp7ImFwcG9pbnRtZW50cyI6W10sIl9pZCI6IjVjNTM3ZTE2ZThjZjE2NWU5Y2VmNzQ1ZiIsImVtYWlsIjoiaGVsbG90ZXN0NEBnbWFpbC5jb20iLCJwYXNzd29yZCI6IiQyYSQxMCRvYUdXM0RQMWtzVDNTV2NnOTZ4WHZ1S1UuVGZETW1nQ0JCSnFXUkR0eFdqQjRxMzVzd3VjaSIsIl9fdiI6MH0sImlhdCI6MTU0ODk3NTYzOH0.arSB9jlHaRT3Tia1FbzQaTeELlu7VKipM01ASr9U-Ko
+Content-Type: application/json
+
+  {
+    "appointmentName": "Another test :)",
+    "appointmentPhoneNumber": "253-426-7890",
+    "time": "4:00 PM"
+  }
+
+
+
+
+### Valid Request
+PUT http://localhost:9001/api/updateAppointment
+Authorization: bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjp7ImFwcG9pbnRtZW50cyI6W10sIl9pZCI6IjVjNTM3ZTE2ZThjZjE2NWU5Y2VmNzQ1ZiIsImVtYWlsIjoiaGVsbG90ZXN0NEBnbWFpbC5jb20iLCJwYXNzd29yZCI6IiQyYSQxMCRvYUdXM0RQMWtzVDNTV2NnOTZ4WHZ1S1UuVGZETW1nQ0JCSnFXUkR0eFdqQjRxMzVzd3VjaSIsIl9fdiI6MH0sImlhdCI6MTU0ODk3NTYzOH0.arSB9jlHaRT3Tia1FbzQaTeELlu7VKipM01ASr9U-Ko
+Content-Type: application/json
+
+  {
+    "appointmentName": "Changed this",
+    "appointmentPhoneNumber": "123-899-2312",
+    "time": "4:00 PM",
+    "_id": "5c5383018a65a7b9f70cd46d"
+  }

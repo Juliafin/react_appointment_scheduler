@@ -1,8 +1,6 @@
 const express = require('express');
 const {User, Appointment} = require('../models/');
-const lookupUserIP = require('../services/ip_lookup');
 const bodyParser = require('body-parser');
-const moment = require('moment');
 const expressJWT = require('express-jwt');
 const {SECRET} = require('./../../config');
 
@@ -111,12 +109,4 @@ apiRouter.delete('/deleteAppointment', (req, res) => {
   } 
 });
 
-
-
-
-
-apiRouter.get('/ip', lookupUserIP);
-
-
 module.exports = apiRouter;
-

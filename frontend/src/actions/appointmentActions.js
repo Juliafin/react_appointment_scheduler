@@ -1,8 +1,59 @@
 import axios from 'axios';
+import history from './../history';
 
 // TODO Get appointments
 export const GET_APPOINTMENTS = "GET APPOINTMENTS";
 
+
+export const CHECK_TOKEN_AND_USER_EXISTS = "CHECK TOKEN";
+export const checkTokenAndUserExists = () => ({
+  type: CHECK_TOKEN_AND_USER_EXISTS
+});
+
+export const AUTHENTICATE_USER_SUCCESS = "AUTHENTICATE USER SUCCESS";
+export const authenticateUserSuccess = ({
+  type: AUTHENTICATE_USER_SUCCESS
+});
+
+
+export const authenticateUser = (token) => (dispatch) => {
+  let AUTH_ENDPOINT = "http://localhost:9001/auth/authenticate";
+  let headers = {'Authorization': `bearer ${token}`};
+
+  axios.post(AUTH_ENDPOINT, {}, {headers})
+    .then((authResponse) => {
+      console.log(authResponse.status);
+      console.log(authResponse.data);
+      console.log('INSIDE AUTHENTICATE RESPONSE')
+      return dispatch(authenticateUserSuccess());
+    });
+};
+
+
+export const REGISTER_USER_SUCCESS = "REGISTER USER SUCCESS";
+export const registerUserSuccess = (token, email, _id) => ({
+  type: REGISTER_USER_SUCCESS,
+  token, email, _id
+});
+
+export const registerUser = (email, password) => (dispatch) => {
+  let REGISTER_ENDPOINT = "http://localhost:9001/auth/register";
+  axios.post(REGISTER_ENDPOINT, {email, password})
+    .then((response) => {
+      console.log(response);
+      // dispatch a success action
+      if (response.data.message === "User Created") {
+        let {email, _id} = response.data.createdUser;
+        let {token} = response.data;
+        history.push('/schedule');
+        return dispatch(registerUserSuccess(token, email, _id));
+      }
+    })
+    .catch((error) => {
+      console.log('There was an error registering');
+      // dispatch a failure action
+    });
+};
 
 
 let BASE_URL_2 = 'http://localhost:9001/api/ip';
@@ -12,7 +63,7 @@ export const getIpInfoSuccess = (ipData) => ({
   ipData
 });
 export const getIpInfo = () => (dispatch) => {
-  let BASE_URL = 'http://73.43.238.115:9001/api/ip';
+  let BASE_URL = 'http://73.43.238.115:9001/service/ip';
   axios.get(BASE_URL)
     .then((response) => {
       // console.log(response);

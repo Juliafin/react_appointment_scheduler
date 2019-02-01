@@ -35,26 +35,38 @@ class Home extends Component {
           Welcome{ipInfo ? ipInfo: '!'} Please login or try out the app in Guest Mode!
           </p>
         </header>
-        <div className="welcome">
-          <Button 
-            waves="green">
-            <Link to="/login">
-            Login
-            </Link>
-          </Button>
-          <Button 
-            waves="green">
-            <Link to="/register">
-            Register
-            </Link>
-          </Button>
-          
-          <Button waves="green">
-            <Link onClick={this.guestMode} to="/schedule">
-            Guest
-            </Link>
-          </Button>
-        </div>
+        {
+          !this.props.currentUserAuthenticated ?
+            <div className="welcome">
+              <Button 
+                waves="green">
+                <Link to="/login">
+                Login
+                </Link>
+              </Button>
+              <Button 
+                waves="green">
+                <Link to="/register">
+                Register
+                </Link>
+              </Button>
+              
+              <Button waves="green">
+                <Link onClick={this.guestMode} to="/schedule">
+                Guest
+                </Link>
+              </Button>
+            </div>
+            :
+            <div className="welcome">
+              <Button waves="green">
+                <Link to="/schedule">
+                Schedule
+                </Link>
+              </Button>
+            </div>
+        }
+      
       </div>
     );
   }
@@ -62,7 +74,8 @@ class Home extends Component {
 
 const mapStateToProps = (state) => ({
   guestMode: state.guestMode,
-  ipData: state.ipData
+  ipData: state.ipData,
+  currentUserAuthenticated: state.currentUserAuthenticated
 });
 
 export default connect(mapStateToProps)(Home);

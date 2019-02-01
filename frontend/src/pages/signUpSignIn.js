@@ -9,7 +9,8 @@ import {
   setEmail,
   validateEmail,
   validatePassword,
-  validateSignInSignUp
+  validateSignInSignUp,
+  registerUser
 } from './../actions/appointmentActions';
 import './signUpSignIn.css';
 
@@ -22,6 +23,7 @@ class SignUpSignIn extends Component {
     this.setPassword = this.setPassword.bind(this);
     this.validateEmail = this.validateEmail.bind(this);
     this.validatePassword = this.validatePassword.bind(this);
+    this.handleSignUpSignIn = this.handleSignUpSignIn.bind(this);
   }
 
   componentDidMount() {
@@ -54,13 +56,21 @@ class SignUpSignIn extends Component {
     this.props.dispatch(validateSignInSignUp());
   }
 
+  handleSignUpSignIn() {
+    console.log('Inside handle signup sign in ');
+    console.log('this.props inside handle signup sign in', this.props);
+    if (this.props.signInSignUpFormValid) {
+      if (this.props.registration) {
+        this.props.dispatch(registerUser(this.props.email, this.props.password));
+      }
+    }
+  }
+
+
   determineRegistration() {
-    console.log('inside determine registration', this.props.registration);
     if (this.props.match.url === '/login') {
       this.props.dispatch(unsetRegistration());
-      console.log('match url is login');
     } else if (this.props.match.url === '/register') {
-      console.log('match url is register');
       this.props.dispatch(setRegistration());
     }
   }
@@ -70,7 +80,6 @@ class SignUpSignIn extends Component {
   }
 
   render () {
-    console.log(this.props, 'props in signin component');
     return (
       <div className="slowPopIn" id="signUpSignIn">
         <div className="choice">I would like to: </div>
@@ -112,7 +121,8 @@ class SignUpSignIn extends Component {
           <Button 
             waves="green" 
             id="authSubmit"
-            disabled={this.props.signInSignUpFormValid ? false : true}>
+            disabled={this.props.signInSignUpFormValid ? false : true}
+            onClick={this.handleSignUpSignIn}>
             {this.props.registration ? 'Register' : 'Sign In'}
           </Button>
         </Row>
@@ -125,7 +135,9 @@ const mapStateToProps = (state) => ({
   registration: state.registration,
   emailValid: state.emailValid,
   passwordValid: state.passwordValid,
-  signInSignUpFormValid: state.signInSignUpFormValid
+  signInSignUpFormValid: state.signInSignUpFormValid,
+  password: state.password,
+  email: state.email
 });
 
 export default connect(mapStateToProps)(SignUpSignIn);

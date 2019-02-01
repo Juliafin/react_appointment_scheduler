@@ -16,3 +16,7 @@
   background-color: #336b87;
 
 }
+
+label.active {
+  width: 25vw;
+}
