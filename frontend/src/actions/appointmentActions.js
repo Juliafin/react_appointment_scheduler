@@ -24,7 +24,7 @@ export const authenticateUser = (token) => (dispatch) => {
     .then((authResponse) => {
       console.log(authResponse.status);
       console.log(authResponse.data);
-      console.log('INSIDE AUTHENTICATE RESPONSE')
+      console.log('INSIDE AUTHENTICATE RESPONSE');
       return dispatch(authenticateUserSuccess());
     });
 };

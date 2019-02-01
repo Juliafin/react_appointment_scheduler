@@ -16,9 +16,9 @@ class App extends Component {
     let times = generateTimes(this.props.initialHour, this.props.endHour);
     this.props.dispatch(setAppointmentTimes(times));
     this.props.dispatch(checkTokenAndUserExists());
-    console.log('this props', this.props)
+    console.log('this props', this.props);
     if (this.props.currentUserID && this.props.currentUserToken) {
-      console.log('inside component did mount!')
+      console.log('inside component did mount!');
       this.props.dispatch(authenticateUser(this.props.currentUserToken));
     }
   }

@@ -47,7 +47,7 @@ apiRouter.get('/appointments', async(req, res) => {
 
 apiRouter.post("/addAppointment", async(req, res) => {
   let appointment = req.body;
-  console.log(appointment, 'appointment in request body in add appointment')
+  console.log(appointment, 'appointment in request body in add appointment');
   let _id = req.user.user;
   if (!appointment.appointmentName || !appointment.appointmentPhoneNumber || !_id) {
     return res.status(400).json({message: "Appointment name or phone number is not valid or userID not provided."});
@@ -88,7 +88,7 @@ apiRouter.put('/updateAppointment', async(req, res) => {
   let appointment = req.body;
   let {_id} = appointment;
   if (!_id) {
-    return res.status(400).json({message: "Id must be provided in order to update an appointment"})
+    return res.status(400).json({message: "Id must be provided in order to update an appointment"});
   }
 
   let updatedAppointment = await Appointment.findByIdAndUpdate(_id, appointment, {new: true});

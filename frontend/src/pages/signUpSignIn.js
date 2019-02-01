@@ -10,7 +10,8 @@ import {
   validateEmail,
   validatePassword,
   validateSignInSignUp,
-  registerUser
+  registerUser,
+  loginUser
 } from './../actions/appointmentActions';
 import './signUpSignIn.css';
 
@@ -62,6 +63,8 @@ class SignUpSignIn extends Component {
     if (this.props.signInSignUpFormValid) {
       if (this.props.registration) {
         this.props.dispatch(registerUser(this.props.email, this.props.password));
+      } else {
+        this.props.dispatch(loginUser(this.props.email, this.props.password));
       }
     }
   }

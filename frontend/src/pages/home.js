@@ -32,7 +32,7 @@ class Home extends Component {
       <div className="headerContainer slowPopIn">
         <header className="App-header">
           <p className="welcomeText">
-          Welcome{ipInfo ? ipInfo: '!'} Please login or try out the app in Guest Mode!
+          Welcome{ipInfo ? ipInfo: '!'} {!this.props.currentUserAuthenticated ? 'Please login or try out the app in Guest Mode!': 'Please continue to your schedule!'}
           </p>
         </header>
         {

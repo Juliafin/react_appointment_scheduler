@@ -20,7 +20,7 @@ authRouter.post('/register', async(req, res) => {
   // Check if user exists in the db
   try {
 
-    let foundUser = await User.findOne({email}).count()
+    let foundUser = await User.findOne({email}).count();
     console.log(foundUser);
   
     if (foundUser) {
@@ -40,7 +40,7 @@ authRouter.post('/register', async(req, res) => {
       token: userToken
     });
   } catch(error) {
-    console.log('There was an error', error)
+    console.log('There was an error', error);
     return res.status(500).json({message: "Internal Server error"});
   }
 
@@ -71,10 +71,10 @@ authRouter.post('/login', async(req, res) => {
       let userToken = jsonWebToken.sign({user:userFound}, SECRET);
       return res.json({message: "Successfully logged in", userToken, loggedInUser: userFound.showUser()});
     } else {
-      return res.status(401).json({message: "Unauthorized"})
+      return res.status(401).json({message: "Unauthorized"});
     }
   } catch(error) {
-    console.log('There was an error', error)
+    console.log('There was an error', error);
     return res.status(500).json({message: "Internal Server error"});
   }
 
