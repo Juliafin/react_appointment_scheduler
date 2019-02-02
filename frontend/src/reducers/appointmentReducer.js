@@ -204,25 +204,32 @@ export const appointmentReducer = (state=initialState, action) => {
     return Object.assign({}, state, {signInSignUpFormValid: false});
   
   case actionTypes.CHECK_TOKEN_AND_USER_EXISTS:
-    let token = localStorage.getItem('token');
-    let currentUserID = localStorage.getItem('userID');
-    let email = localStorage.getItem("userEmail");
-    if (token && currentUserID && email) {
-      return Object.assign(
-        {}, state, {currentUserID, currentUserToken: token, currentUserEmail: email});
+    let authInfo = JSON.parse(localStorage.getItem("auth"));
+    if (authInfo){
+      let {token, email, userID} = authInfo;
+      
+      if (token && userID && email) {
+        return Object.assign(
+          {}, state, {currentUserID: userID, currentUserToken: token, currentUserEmail: email});
+      }
     }
     return state;
   case actionTypes.REGISTER_USER_SUCCESS:
-    localStorage.setItem("token", action.token);
-    localStorage.setItem("userEmail", action.email);
-    localStorage.setItem("userID", action._id);
+    
+    localStorage.setItem("auth", JSON.stringify({
+      token: action.token,
+      userEmail: action.email,
+      userID: action._id
+    }));
     return Object.assign({}, state, {currentUserAuthenticated: true});
   case actionTypes.AUTHENTICATE_USER_SUCCESS:
     return Object.assign({}, state, {currentUserAuthenticated: true});
   case actionTypes.LOGIN_USER_SUCCESS:
-    localStorage.setItem("token", action.token);
-    localStorage.setItem("userEmail", action.email);
-    localStorage.setItem("userID", action._id);
+    localStorage.setItem(JSON.stringify({
+      token: action.token,
+      userEmail: action.email,
+      userID: action._id
+    }));
     return Object.assign({}, state, {currentUserAuthenticated: true});
   default:
     return state;

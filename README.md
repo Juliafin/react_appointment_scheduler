@@ -32,8 +32,8 @@
 
 ### Main Page: 
 
-![Dashboard Screenshot]((https://github.com/Juliafin/react_appointment_scheduler/blob/master/docs/react_appointment_scheduler.JPG)
+![Dashboard Screenshot](https://github.com/Juliafin/react_appointment_scheduler/blob/master/docs/react_appointment_scheduler.JPG)
 
 ### Integration Tests:
 
-![Form Screenshot](https://github.com/Juliafin/react_appointment_scheduler/blob/master/docs/Integration%20tests.JPG))
+![Form Screenshot](https://github.com/Juliafin/react_appointment_scheduler/blob/master/docs/Integration%20tests.JPG)
