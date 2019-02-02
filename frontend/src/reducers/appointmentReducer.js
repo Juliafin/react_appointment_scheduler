@@ -240,9 +240,7 @@ export const appointmentReducer = (state=initialState, action) => {
     let token = localStorage.getItem('token');
     let currentUserID = localStorage.getItem('userID');
     let email = localStorage.getItem("userEmail");
-    console.log(token, currentUserID, email, 'INSIDE CHECK TOKEN REDUCER');
     if (token && currentUserID && email) {
-      console.log('EVERYTHING EXISTS IN LOCAL STORAGE')
       return Object.assign(
         {}, state, {currentUserID, currentUserToken: token, currentUserEmail: email});
     }
@@ -251,7 +249,6 @@ export const appointmentReducer = (state=initialState, action) => {
     localStorage.setItem("token", action.token);
     localStorage.setItem("userEmail", action.email);
     localStorage.setItem("userID", action._id);
-    console.log('LOCAL STORAGE IN REGISTER USER SUCCESS')
     return Object.assign({}, state, {currentUserAuthenticated: true});
   case AUTHENTICATE_USER_SUCCESS:
     return Object.assign({}, state, {currentUserAuthenticated: true});

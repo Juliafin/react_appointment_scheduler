@@ -9,16 +9,13 @@ import {setAppointmentTimes, checkTokenAndUserExists, authenticateUser} from './
 import generateTimes from './utils/generateSchedule';
 import './App.css';
 
-class App extends Component {
+export class App extends Component {
 
   componentDidMount() {
-    console.log('inside app component mount');
     let times = generateTimes(this.props.initialHour, this.props.endHour);
     this.props.dispatch(setAppointmentTimes(times));
     this.props.dispatch(checkTokenAndUserExists());
-    console.log('this props', this.props);
     if (this.props.currentUserID && this.props.currentUserToken) {
-      console.log('inside component did mount!');
       this.props.dispatch(authenticateUser(this.props.currentUserToken));
     }
   }

@@ -51,6 +51,13 @@ class Schedule extends Component {
     }
   }
 
+  componentWillReceiveProps(nextProps) {
+    this.props.dispatch(checkTokenAndUserExists());
+    if (nextProps.currentUserAuthenticated) {
+      this.props.dispatch(getAppointments(this.props.currentUserToken));
+    }
+  }
+
   closeModal() {
     this.props.dispatch(hideModal());
     this.clearAppointment();

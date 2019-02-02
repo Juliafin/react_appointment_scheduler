@@ -84,8 +84,7 @@ export const loginUserSuccess = (email, id, token) => ({
 
 
 export const loginUser = (email, password) => (dispatch) => {
-  let baseURL = "http://localhost:9001";
-  let LOGIN_ENDPOINT = baseURL + '/auth/login';
+  let LOGIN_ENDPOINT = '/auth/login';
   axios.post(LOGIN_ENDPOINT, {email, password})
     .then((response) => {
       console.log(response);

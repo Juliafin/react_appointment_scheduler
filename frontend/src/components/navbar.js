@@ -5,14 +5,13 @@ import {connect} from 'react-redux';
 import {enableGuestMode} from './../actions/appointmentActions';
 import './navbar.css';
 
-const Nav = (props) => {
-  console.log('props in nav', props);
+export const Nav = (props) => {
   return (
     <Navbar className="nav" brand='React Appointment Scheduler' left>
-      <NavItem>
+      <NavItem node={<div></div>}>
         <Link className="navLink" to="/">Home</Link>
       </NavItem>
-      <NavItem href='components.html'>
+      <NavItem node={<div></div>} href='components.html'>
         {
           props.currentUserAuthenticated | props.guestMode ?
             <Link className="navLink" to="/schedule">Schedule</Link>
