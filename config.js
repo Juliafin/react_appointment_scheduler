@@ -3,15 +3,15 @@ require('dotenv').config();
 const environment = {
 
   production : {
-    MONGO_URL: process.env.MONGO_URL_PROD
+    MONGO_URL: process.env.MONGO_URL_PROD || 'mongodb://localhost:27017/react_appointment_scheduler'
   },
   
   local : {
-    MONGO_URL: process.env.MONGO_URL_LOCAL
+    MONGO_URL: process.env.MONGO_URL_LOCAL || 'mongodb://localhost:27017/react_appointment_scheduler'
   },
   
   test : {
-    MONGO_URL: process.env.MONGO_URL_TEST
+    MONGO_URL: process.env.MONGO_URL_TEST || 'mongodb://localhost:27017/react_appointment_scheduler'
   },
   common: {
     PORT: process.env.PORT,
