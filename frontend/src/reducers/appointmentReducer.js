@@ -1,38 +1,5 @@
 /* eslint-disable no-case-declarations */
-import {
-  ENABLE_GUEST_MODE,
-  GET_IP_INFO_SUCCESS,
-  SHOW_MODAL,
-  HIDE_MODAL,
-  SET_CURRENT_APPOINTMENT_NAME,
-  SET_CURRENT_APPOINTMENT_TIME,
-  SET_CURRENT_APPOINTMENT_INDEX,
-  SET_CURRENT_APPOINTMENT_PHONE_NUMBER,
-  SET_CURRENT_APPOINTMENT_EDIT_STATE,
-  SET_APPOINTMENT_EDITED,
-  SET_APPOINTMENT_TIMES,
-  UPDATE_APPOINTMENT,
-  CLEAR_CURRENT_APPOINTMENT,
-  VALIDATE_PHONE_NUMBER,
-  VALIDATE_APPOINTMENT_NAME,
-  RETRIEVE_APPOINTMENTS_CACHE,
-  WRITE_APPOINTMENTS_CACHE,
-  RESET_APPOINTMENTS,
-  SHOW_DELETE_CONFIRMATION_MODAL,
-  HIDE_DELETE_CONFIRMATION_MODAL,
-  SET_REGISTRATION,
-  UNSET_REGISTRATION,
-  TOGGLE_REGISTRATION,
-  SET_EMAIL,
-  SET_PASSWORD,
-  VALIDATE_EMAIL,
-  VALIDATE_PASSWORD,
-  VALIDATE_SIGNIN_SIGNUP,
-  CHECK_TOKEN_AND_USER_EXISTS,
-  REGISTER_USER_SUCCESS,
-  AUTHENTICATE_USER_SUCCESS,
-  LOGIN_USER_SUCCESS
-} from '../actions/appointmentActions';
+import * as actionTypes from '../actions/actionTypes';
 
 export const initialState = {
   currentUserAuthenticated: false,
@@ -61,22 +28,22 @@ export const initialState = {
 
 export const appointmentReducer = (state=initialState, action) => {
   switch(action.type) {
-  case ENABLE_GUEST_MODE:
+  case actionTypes.ENABLE_GUEST_MODE:
     return Object.assign({}, state, {guestMode: true});
 
-  case GET_IP_INFO_SUCCESS:
+  case actionTypes.GET_IP_INFO_SUCCESS:
     return Object.assign({}, state, {ipData: action.ipData});
 
-  case SHOW_MODAL:
+  case actionTypes.SHOW_MODAL:
     return Object.assign({}, state, {showModal: true});
 
-  case HIDE_MODAL:
+  case actionTypes.HIDE_MODAL:
     return Object.assign({}, state, {showModal: false});
   
-  case SET_APPOINTMENT_TIMES:
+  case actionTypes.SET_APPOINTMENT_TIMES:
     return Object.assign({}, state, {appointments: action.appointments});
 
-  case SET_CURRENT_APPOINTMENT_NAME:
+  case actionTypes.SET_CURRENT_APPOINTMENT_NAME:
     return Object.assign(
       {}, 
       state, 
@@ -89,7 +56,7 @@ export const appointmentReducer = (state=initialState, action) => {
       }
     );
 
-  case SET_CURRENT_APPOINTMENT_TIME:
+  case actionTypes.SET_CURRENT_APPOINTMENT_TIME:
     return Object.assign(
       {}, 
       state, {
@@ -99,7 +66,7 @@ export const appointmentReducer = (state=initialState, action) => {
         }
       });
 
-  case SET_CURRENT_APPOINTMENT_PHONE_NUMBER:
+  case actionTypes.SET_CURRENT_APPOINTMENT_PHONE_NUMBER:
     return Object.assign(
       {},
       state, {
@@ -110,7 +77,7 @@ export const appointmentReducer = (state=initialState, action) => {
       }
     );
 
-  case SET_CURRENT_APPOINTMENT_INDEX:
+  case actionTypes.SET_CURRENT_APPOINTMENT_INDEX:
     return Object.assign(
       {},
       state,
@@ -122,7 +89,7 @@ export const appointmentReducer = (state=initialState, action) => {
       }
     );
 
-  case UPDATE_APPOINTMENT:
+  case actionTypes.UPDATE_APPOINTMENT:
     if (!state.currentAppointment.appointmentName) {
       return state;
     }
@@ -136,17 +103,17 @@ export const appointmentReducer = (state=initialState, action) => {
       currentAppointment: {...state.currentAppointment}
     });
 
-  case CLEAR_CURRENT_APPOINTMENT:
+  case actionTypes.CLEAR_CURRENT_APPOINTMENT:
     return Object.assign({}, state, {currentAppointment: {}});
 
-  case SET_APPOINTMENT_EDITED:
+  case actionTypes.SET_APPOINTMENT_EDITED:
 
     let appointments = state.appointments.slice();
     appointments[state.currentAppointment.appointmentIndex].edited = true;
 
     return Object.assign({}, state, {appointments});
   
-  case SET_CURRENT_APPOINTMENT_EDIT_STATE:
+  case actionTypes.SET_CURRENT_APPOINTMENT_EDIT_STATE:
     return Object.assign(
       {},
       state,
@@ -158,15 +125,15 @@ export const appointmentReducer = (state=initialState, action) => {
       }
     );
 
-  case VALIDATE_PHONE_NUMBER:
+  case actionTypes.VALIDATE_PHONE_NUMBER:
     let phoneNumber = state.currentAppointment.appointmentPhoneNumber;
     let phoneNumberValid = new RegExp(/^\d{3}-\d{3}-\d{4}$/);
     return Object.assign({}, state, {phoneNumberValid: phoneNumberValid.test(phoneNumber)});
 
-  case VALIDATE_APPOINTMENT_NAME:
+  case actionTypes.VALIDATE_APPOINTMENT_NAME:
     return Object.assign({}, state, {appointmentNameValid: Boolean(state.currentAppointment.appointmentName)});
 
-  case RETRIEVE_APPOINTMENTS_CACHE:
+  case actionTypes.RETRIEVE_APPOINTMENTS_CACHE:
     if (state.guestMode) {
       let cachedAppointments = JSON.parse(localStorage.getItem("guest"));
       if (cachedAppointments) {
@@ -175,47 +142,47 @@ export const appointmentReducer = (state=initialState, action) => {
     }
     return state;
 
-  case WRITE_APPOINTMENTS_CACHE:
+  case actionTypes.WRITE_APPOINTMENTS_CACHE:
     if (state.guestMode) {
       localStorage.setItem("guest", JSON.stringify(state.appointments));
     }
     return state;
 
-  case RESET_APPOINTMENTS:
+  case actionTypes.RESET_APPOINTMENTS:
     if (state.guestMode) {
       localStorage.setItem("guest", null);
       return Object.assign({}, state, {apppointments: []});
     }
     return state;
 
-  case SHOW_DELETE_CONFIRMATION_MODAL:
+  case actionTypes.SHOW_DELETE_CONFIRMATION_MODAL:
     if (state.guestMode) {
       return Object.assign({}, state, {showDeleteModal: true});
     }
     return state;
 
-  case HIDE_DELETE_CONFIRMATION_MODAL:
+  case actionTypes.HIDE_DELETE_CONFIRMATION_MODAL:
     if (state.guestMode) {
       return Object.assign({}, state, {showDeleteModal: false});
     }
     return state;
 
-  case SET_REGISTRATION:
+  case actionTypes.SET_REGISTRATION:
     return Object.assign({}, state, {registration: true});
 
-  case UNSET_REGISTRATION:
+  case actionTypes.UNSET_REGISTRATION:
     return Object.assign({}, state, {registration: false});
 
-  case TOGGLE_REGISTRATION:
+  case actionTypes.TOGGLE_REGISTRATION:
     return Object.assign({}, state, {registration: !state.registration});
 
-  case SET_PASSWORD:
+  case actionTypes.SET_PASSWORD:
     return Object.assign({}, state, {password: action.password});
 
-  case SET_EMAIL:
+  case actionTypes.SET_EMAIL:
     return Object.assign({}, state, {email: action.email});
 
-  case VALIDATE_EMAIL:
+  case actionTypes.VALIDATE_EMAIL:
     const emailValid = new RegExp(/^.+@{1}.+\.[a-zA-Z]{2,4}$/);
     
     if (emailValid.test(state.email)) {
@@ -223,20 +190,20 @@ export const appointmentReducer = (state=initialState, action) => {
     }
     return Object.assign({}, state, {emailValid: false});
 
-  case VALIDATE_PASSWORD:
+  case actionTypes.VALIDATE_PASSWORD:
     const passwordValid = new RegExp(/((?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[@#$?%!/\{\}\[\]\(\)]).{6,20})/);
     if (passwordValid.test(state.password)) {
       return Object.assign({}, state, {passwordValid: true});
     }
     return Object.assign({}, state, {passwordValid: false});
 
-  case VALIDATE_SIGNIN_SIGNUP:
+  case actionTypes.VALIDATE_SIGNIN_SIGNUP:
     if (state.emailValid && state.passwordValid) {
       return Object.assign({}, state, {signInSignUpFormValid: true});
     }
     return Object.assign({}, state, {signInSignUpFormValid: false});
   
-  case CHECK_TOKEN_AND_USER_EXISTS:
+  case actionTypes.CHECK_TOKEN_AND_USER_EXISTS:
     let token = localStorage.getItem('token');
     let currentUserID = localStorage.getItem('userID');
     let email = localStorage.getItem("userEmail");
@@ -245,14 +212,14 @@ export const appointmentReducer = (state=initialState, action) => {
         {}, state, {currentUserID, currentUserToken: token, currentUserEmail: email});
     }
     return state;
-  case REGISTER_USER_SUCCESS:
+  case actionTypes.REGISTER_USER_SUCCESS:
     localStorage.setItem("token", action.token);
     localStorage.setItem("userEmail", action.email);
     localStorage.setItem("userID", action._id);
     return Object.assign({}, state, {currentUserAuthenticated: true});
-  case AUTHENTICATE_USER_SUCCESS:
+  case actionTypes.AUTHENTICATE_USER_SUCCESS:
     return Object.assign({}, state, {currentUserAuthenticated: true});
-  case LOGIN_USER_SUCCESS:
+  case actionTypes.LOGIN_USER_SUCCESS:
     localStorage.setItem("token", action.token);
     localStorage.setItem("userEmail", action.email);
     localStorage.setItem("userID", action._id);

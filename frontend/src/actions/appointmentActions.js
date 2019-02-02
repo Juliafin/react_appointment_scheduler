@@ -1,11 +1,11 @@
 import axios from 'axios';
 import history from './../history';
-
+import * as actionTypes from './actionTypes';
 // TODO Get appointments
-export const GET_APPOINTMENTS_SUCCESS = "GET APPOINTMENTS SUCCESS";
+
 
 export const getAppointmentsSuccess = () => ({
-  type: GET_APPOINTMENTS_SUCCESS
+  type: actionTypes.GET_APPOINTMENTS_SUCCESS
 });
 
 export const getAppointments = (token) => (dispatch) => {
@@ -23,15 +23,19 @@ export const getAppointments = (token) => (dispatch) => {
 };
 
 
-
-export const CHECK_TOKEN_AND_USER_EXISTS = "CHECK TOKEN";
-export const checkTokenAndUserExists = () => ({
-  type: CHECK_TOKEN_AND_USER_EXISTS
+export const logout = () => ({
+  type: actionTypes.LOGOUT
 });
 
-export const AUTHENTICATE_USER_SUCCESS = "AUTHENTICATE USER SUCCESS";
+
+
+export const checkTokenAndUserExists = () => ({
+  type: actionTypes.CHECK_TOKEN_AND_USER_EXISTS
+});
+
+
 export const authenticateUserSuccess = ({
-  type: AUTHENTICATE_USER_SUCCESS
+  type: actionTypes.AUTHENTICATE_USER_SUCCESS
 });
 
 
@@ -49,9 +53,9 @@ export const authenticateUser = (token) => (dispatch) => {
 };
 
 
-export const REGISTER_USER_SUCCESS = "REGISTER USER SUCCESS";
+
 export const registerUserSuccess = (token, email, _id) => ({
-  type: REGISTER_USER_SUCCESS,
+  type: actionTypes.REGISTER_USER_SUCCESS,
   token, email, _id
 });
 
@@ -74,9 +78,9 @@ export const registerUser = (email, password) => (dispatch) => {
     });
 };
 
-export const LOGIN_USER_SUCCESS = "LOGIN USER SUCCESS";
+
 export const loginUserSuccess = (email, id, token) => ({
-  type: LOGIN_USER_SUCCESS,
+  type: actionTypes.LOGIN_USER_SUCCESS,
   email,
   id,
   token
@@ -100,9 +104,9 @@ export const loginUser = (email, password) => (dispatch) => {
     })
 };
 
-export const GET_IP_INFO_SUCCESS = "GET_IP_INFO_SUCCESS";
+
 export const getIpInfoSuccess = (ipData) => ({
-  type: GET_IP_INFO_SUCCESS,
+  type: actionTypes.GET_IP_INFO_SUCCESS,
   ipData
 });
 export const getIpInfo = () => (dispatch) => {
@@ -117,147 +121,147 @@ export const getIpInfo = () => (dispatch) => {
     .catch((err) => console.log(err));
 };
 
-export const ENABLE_GUEST_MODE = "ENABLE GUEST MODE";
+
 export const enableGuestMode = () => ({
-  type: ENABLE_GUEST_MODE,
+  type: actionTypes.ENABLE_GUEST_MODE,
 });
 
 
-export const SHOW_MODAL = "SHOW MODAL";
+
 export const showModal = () => ({
-  type: SHOW_MODAL
+  type: actionTypes.SHOW_MODAL
 });
 
-export const HIDE_MODAL = "HIDE MODAL";
+
 export const hideModal = () => ({
-  type: HIDE_MODAL
+  type: actionTypes.HIDE_MODAL
 });
 
 
-export const SET_CURRENT_APPOINTMENT_TIME = "SET CURRENT APPOINTMENT TIME";
+
 export const setCurrentAppointmentTime = (appointmentTime) => ({
-  type: SET_CURRENT_APPOINTMENT_TIME,
+  type: actionTypes.SET_CURRENT_APPOINTMENT_TIME,
   appointmentTime: appointmentTime
 });
 
-export const SET_CURRENT_APPOINTMENT_NAME = "SET CURRENT APPOINTMENT NAME";
+
 export const setCurrentAppointmentName = (appointmentName) => ({
-  type: SET_CURRENT_APPOINTMENT_NAME,
+  type: actionTypes.SET_CURRENT_APPOINTMENT_NAME,
   appointmentName
 });
 
-export const SET_CURRENT_APPOINTMENT_INDEX = "SET CURRENT APPOINTMENT INDEX";
+
 export const setCurrentAppointmentIndex = (index) => ({
-  type: SET_CURRENT_APPOINTMENT_INDEX,
+  type: actionTypes.SET_CURRENT_APPOINTMENT_INDEX,
   appointmentIndex: index
 });
 
-export const SET_CURRENT_APPOINTMENT_PHONE_NUMBER = "SET CURRENT APPOINTMENT PHONE NUMBER";
+
 export const setCurrentAppointmentPhoneNumber = (appointmentPhoneNumber) => ({
-  type: SET_CURRENT_APPOINTMENT_PHONE_NUMBER,
+  type: actionTypes.SET_CURRENT_APPOINTMENT_PHONE_NUMBER,
   appointmentPhoneNumber
 });
 
-export const SET_APPOINTMENT_TIMES = "SET APPOINTMENT TIMES";
+
 export const setAppointmentTimes = (appointments) => ({
-  type: SET_APPOINTMENT_TIMES,
+  type: actionTypes.SET_APPOINTMENT_TIMES,
   appointments
 });
 
-export const UPDATE_APPOINTMENT = "UPDATE APPOINTMENT" ;
+
 export const updateAppointment = () => ({
-  type: UPDATE_APPOINTMENT,
+  type: actionTypes.UPDATE_APPOINTMENT,
 });
 
-export const CLEAR_CURRENT_APPOINTMENT = "CLEAR CURRENT APPOINTMENT";
+
 export const clearAppointment = () => ({
-  type: CLEAR_CURRENT_APPOINTMENT
+  type: actionTypes.CLEAR_CURRENT_APPOINTMENT
 });
 
-export const SET_APPOINTMENT_EDITED = "SET APPOINTMENT EDITED";
+
 export const setAppointmentEdited = () => ({
-  type: SET_APPOINTMENT_EDITED
+  type: actionTypes.SET_APPOINTMENT_EDITED
 });
 
-export const SET_CURRENT_APPOINTMENT_EDIT_STATE = "SET CURRENT APPOINTMENT EDITED";
+
 export const setCurrentAppointmentEditedState = (index) => ({
-  type: SET_CURRENT_APPOINTMENT_EDIT_STATE,
+  type: actionTypes.SET_CURRENT_APPOINTMENT_EDIT_STATE,
   appointmentIndex: index
 });
 
-export const VALIDATE_PHONE_NUMBER = "VALIDATE PHONE NUMBER";
+
 export const validatePhoneNumber = () => ({
-  type: VALIDATE_PHONE_NUMBER
+  type: actionTypes.VALIDATE_PHONE_NUMBER
 });
 
-export const VALIDATE_APPOINTMENT_NAME = "VALIDATE APPOINTMENT NAME";
+
 export const validateAppointmentName = () => ({
-  type: VALIDATE_APPOINTMENT_NAME
+  type: actionTypes.VALIDATE_APPOINTMENT_NAME
 });
 
-export const WRITE_APPOINTMENTS_CACHE = "WRITE APPOINTMENTS CACHE";
+
 export const writeAppointmentsCache = () => ({
-  type: WRITE_APPOINTMENTS_CACHE
+  type: actionTypes.WRITE_APPOINTMENTS_CACHE
 });
 
-export const RETRIEVE_APPOINTMENTS_CACHE = "RETRIEVE APPOINTMENTS CACHE";
+
 export const retrieveAppointmentsCache = () => ({
-  type: RETRIEVE_APPOINTMENTS_CACHE
+  type: actionTypes.RETRIEVE_APPOINTMENTS_CACHE
 });
 
-export const RESET_APPOINTMENTS = "RESET APPOINTMENTS";
+
 export const resetAppointments = () => ({
-  type: RESET_APPOINTMENTS
+  type: actionTypes.RESET_APPOINTMENTS
 });
 
-export const SHOW_DELETE_CONFIRMATION_MODAL = "SHOW DELETE CONFIRMATION MODAL";
+
 export const showDeleteConfirmationModal = () => ({
-  type: SHOW_DELETE_CONFIRMATION_MODAL
+  type: actionTypes.SHOW_DELETE_CONFIRMATION_MODAL
 });
 
-export const HIDE_DELETE_CONFIRMATION_MODAL = "HIDE DELETE CONFIRMATION MODAL";
+
 export const hideDeleteConfirmationModal = () => ({
-  type: HIDE_DELETE_CONFIRMATION_MODAL
+  type: actionTypes.HIDE_DELETE_CONFIRMATION_MODAL
 });
 
-export const SET_REGISTRATION = "SET_REGISTRATION";
+
 export const setRegistration = () => ({
-  type: SET_REGISTRATION
+  type: actionTypes.SET_REGISTRATION
 });
 
-export const UNSET_REGISTRATION = "UNSET_REGISTRATION";
+
 export const unsetRegistration = () => ({
-  type: UNSET_REGISTRATION
+  type: actionTypes.UNSET_REGISTRATION
 });
 
-export const TOGGLE_REGISTRATION = "TOGGLE REGISTRATION";
+
 export const toggleRegistration = () => ({
-  type: TOGGLE_REGISTRATION
+  type: actionTypes.TOGGLE_REGISTRATION
 });
 
-export const SET_PASSWORD = "SET PASSWORD";
+
 export const setPassword = (password) => ({
-  type: SET_PASSWORD,
+  type: actionTypes.SET_PASSWORD,
   password
 });
 
-export const SET_EMAIL = "SET EMAIL";
+
 export const setEmail = (email) => ({
-  type: SET_EMAIL,
+  type: actionTypes.SET_EMAIL,
   email
 });
 
-export const VALIDATE_EMAIL = "VALIDATE EMAIL";
+
 export const validateEmail = () => ({
-  type: VALIDATE_EMAIL
+  type: actionTypes.VALIDATE_EMAIL
 });
 
-export const VALIDATE_PASSWORD = "VALIDATE PASSWORD";
+
 export const validatePassword = () => ({
-  type: VALIDATE_PASSWORD
+  type: actionTypes.VALIDATE_PASSWORD
 });
 
-export const VALIDATE_SIGNIN_SIGNUP = "VALIDATE SIGNIN SIGNUP";
+
 export const validateSignInSignUp = () => ({
-  type: VALIDATE_SIGNIN_SIGNUP
+  type: actionTypes.VALIDATE_SIGNIN_SIGNUP
 }); 
