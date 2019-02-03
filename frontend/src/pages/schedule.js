@@ -37,6 +37,7 @@ class Schedule extends Component {
     this.showConfirmationModal = this.showConfirmationModal.bind(this);
     this.closeConfirmationModal = this.closeConfirmationModal.bind(this);
     this.deleteAppointments = this.deleteAppointments.bind(this);
+    this.keyDownSubmit = this.keyDownSubmit.bind(this);
   }
 
   componentDidMount() {
@@ -110,6 +111,12 @@ class Schedule extends Component {
 
   showConfirmationModal () {
     this.props.dispatch(showDeleteConfirmationModal());
+  }
+
+  keyDownSubmit(event) {
+    if (event.key === "Enter" && this.props.appointmentNameValid && this.props.phoneNumberValid) {
+      this.closeModalAndUpdate();
+    }
   }
     
   render() {
@@ -188,7 +195,8 @@ class Schedule extends Component {
                 onChange={this.updateApptName}
                 error={!this.props.appointmentNameValid ? 'Enter an appointment name' : ''}
                 success={this.props.appointmentNameValid ? '\u2713' : ''}
-                label="Appointment Name">
+                label="Appointment Name"
+                onKeyPress={this.keyDownSubmit}>
               </Input>
             </Col>
             <Col l={6}>
@@ -199,7 +207,8 @@ class Schedule extends Component {
                 onChange={this.updateApptPhoneNumber}
                 label="Appointment Phone Number"
                 error={!this.props.phoneNumberValid ? '123-456-7890' : ''}
-                success={this.props.phoneNumberValid ? '\u2713': ''}>
+                success={this.props.phoneNumberValid ? '\u2713': ''}
+                onKeyPress={this.keyDownSubmit}>
               </Input>
             </Col>
           </Row>
