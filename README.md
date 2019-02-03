@@ -2,17 +2,19 @@
 
 ### Technologies Used:
 
--Node
--Express
--MongoDB
--React
--Redux 
--Mocha
--Chai
+- Node
+- Express
+- MongoDB
+- React
+- Redux
+
+#### Testing
+- Mocha
+- Chai
+- Jest
 
 
-
-##Installation Instructions
+## Installation Instructions
 1. Clone or download and extract this repo:(https://github.com/Juliafin/react_appointment_scheduler/tree/master)
 2. Install Node.js
 
