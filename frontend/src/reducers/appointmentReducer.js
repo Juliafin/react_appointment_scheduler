@@ -206,12 +206,12 @@ export const appointmentReducer = (state=initialState, action) => {
   
   case actionTypes.CHECK_TOKEN_AND_USER_EXISTS:
     let authInfo = JSON.parse(localStorage.getItem("auth"));
+    console.log(authInfo, 'auth info inside check token action');
     if (authInfo){
-      let {token, email, userID} = authInfo;
-      
-      if (token && userID && email) {
+      let {token, userEmail, userID} = authInfo;
+      if (token && userID && userEmail) {
         return Object.assign(
-          {}, state, {currentUserID: userID, currentUserToken: token, currentUserEmail: email});
+          {}, state, {currentUserID: userID, currentUserToken: token, currentUserEmail: userEmail});
       }
     }
     return state;
@@ -220,7 +220,7 @@ export const appointmentReducer = (state=initialState, action) => {
     localStorage.setItem("auth", JSON.stringify({
       token: action.token,
       userEmail: action.email,
-      userID: action._id
+      userID: action.id
     }));
     return Object.assign({}, state, {currentUserAuthenticated: true});
   case actionTypes.AUTHENTICATE_USER_SUCCESS:
@@ -229,8 +229,9 @@ export const appointmentReducer = (state=initialState, action) => {
     localStorage.setItem("auth", JSON.stringify({
       token: action.token,
       userEmail: action.email,
-      userID: action._id
+      userID: action.id
     }));
+    console.log(localStorage, 'local storage in login user');
     return Object.assign({}, state, {currentUserAuthenticated: true});
   case actionTypes.LOGOUT:
     localStorage.setItem("auth", null);

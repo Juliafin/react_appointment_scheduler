@@ -17,7 +17,8 @@ import {
   showDeleteConfirmationModal,
   hideDeleteConfirmationModal,
   getAppointments,
-  checkTokenAndUserExists
+  checkTokenAndUserExists,
+  authenticateUser
   
 } from './../actions/appointmentActions';
 import TimeTable from './../components/timeTable';
@@ -41,22 +42,23 @@ class Schedule extends Component {
   }
 
   componentDidMount() {
+
     this.props.dispatch(checkTokenAndUserExists());
     if (this.props.guestMode) {
       this.props.dispatch(retrieveAppointmentsCache());
     } else {
       this.props.dispatch(setAppointmentTimes(generateTimes(this.props.initialHour, this.props.endHour)));
     }
-    if (this.props.currentUserAuthenticated) {
-      this.props.dispatch(getAppointments(this.props.currentUserToken));
-    }
+
   }
 
   componentWillReceiveProps(nextProps) {
-    this.props.dispatch(checkTokenAndUserExists());
-    if (nextProps.currentUserAuthenticated) {
-      this.props.dispatch(getAppointments(this.props.currentUserToken));
+
+    console.log('this.props in component will receive props', this.props, 'next props', nextProps);
+    if (nextProps.currentUserEmail && nextProps.currentUserID && nextProps.currentUserToken && !nextProps.currentUserAuthenticated) {
+      this.props.dispatch(authenticateUser(nextProps.currentUserToken));
     }
+
   }
 
   closeModal() {

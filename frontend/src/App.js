@@ -15,11 +15,14 @@ export class App extends Component {
     let times = generateTimes(this.props.initialHour, this.props.endHour);
     this.props.dispatch(setAppointmentTimes(times));
     this.props.dispatch(checkTokenAndUserExists());
-    if (this.props.currentUserID && this.props.currentUserToken) {
-      this.props.dispatch(authenticateUser(this.props.currentUserToken));
-    }
+
   }
 
+  componentWillReceiveProps(nextProps) {
+    if (nextProps.currentUserEmail && nextProps.currentUserID && nextProps.currentUserToken && !nextProps.currentUserAuthenticated) {
+      this.props.dispatch(authenticateUser(nextProps.currentUserToken));
+    }
+  }
 
   render() {
     return (
@@ -39,7 +42,8 @@ const mapStateToProps = (state) => ({
   initialHour: state.initialHour,
   endHour: state.endHour,
   currentUserID: state.currentUserID,
-  currentUserToken: state.currentUserToken
+  currentUserToken: state.currentUserToken,
+  currentUserEmail: state.currentUserEmail
 });
 
 

@@ -2,7 +2,7 @@ import React, {Component} from 'react';
 import {connect} from 'react-redux';
 import {Button} from 'react-materialize';
 import {Link} from 'react-router-dom';
-import {enableGuestMode, checkTokenAndUserExists} from './../actions/appointmentActions';
+import {enableGuestMode, checkTokenAndUserExists, authenticateUser} from './../actions/appointmentActions';
 import './home.css';
 import {getIpInfo} from './..//actions/appointmentActions';
 
@@ -14,10 +14,19 @@ class Home extends Component {
   }
   componentDidMount() {
     this.props.dispatch(checkTokenAndUserExists());
+    console.log('IN HOME JS', this.props);
     if (!this.props.ipData) {
       this.props.dispatch(getIpInfo());
     }
   }
+
+  // componentWillReceiveProps(nextProps) {
+  //   console.log('next props inside home.js', nextProps);
+  //   if (nextProps.currentUserEmail && nextProps.currentUserID && nextProps.currentUserToken && !nextProps.currentUserAuthenticated) {
+  //     console.log('Authenticating token!')
+  //     this.props.dispatch(authenticateUser(nextProps.currentUserToken));
+  //   }
+  // }
 
   guestMode() {
     this.props.dispatch(enableGuestMode());
@@ -26,14 +35,15 @@ class Home extends Component {
   render() {
     console.log(this.props.ipData, 'ipdata in home.js!');
     let ipInfo = null;
+    let user = this.props.currentUserAuthenticated ? this.props.currentUserEmail : 'guest';
     if (this.props.ipData) {
-      ipInfo = ` guest from ${this.props.ipData.city}, ${this.props.ipData.region}!`;
+      ipInfo = ` from ${this.props.ipData.city}, ${this.props.ipData.region}!`;
     }
     return (
       <div className="headerContainer slowPopIn">
         <header className="App-header">
           <p className="welcomeText">
-          Welcome{ipInfo ? ipInfo: '!'} {!this.props.currentUserAuthenticated ? 'Please login or try out the app in Guest Mode!': 'Please continue to your schedule!'}
+          Welcome {user} {ipInfo ? ipInfo: '!'} {!this.props.currentUserAuthenticated ? 'Please login or try out the app in Guest Mode!': 'Please continue to your schedule!'}
           </p>
         </header>
         {
@@ -76,7 +86,10 @@ class Home extends Component {
 const mapStateToProps = (state) => ({
   guestMode: state.guestMode,
   ipData: state.ipData,
-  currentUserAuthenticated: state.currentUserAuthenticated
+  currentUserAuthenticated: state.currentUserAuthenticated,
+  currentUserEmail: state.currentUserEmail,
+  currentUserID: state.currentUserID,
+  currentUserToken: state.currentUserToken
 });
 
 export default connect(mapStateToProps)(Home);

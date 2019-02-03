@@ -34,7 +34,7 @@ export const checkTokenAndUserExists = () => ({
 });
 
 
-export const authenticateUserSuccess = ({
+export const authenticateUserSuccess = () => ({
   type: actionTypes.AUTHENTICATE_USER_SUCCESS
 });
 
@@ -91,11 +91,9 @@ export const loginUser = (email, password) => (dispatch) => {
   let LOGIN_ENDPOINT = '/auth/login';
   axios.post(LOGIN_ENDPOINT, {email, password})
     .then((response) => {
-      console.log(response);
       if (response.data.message === "Successfully logged in") {
         let {email, _id} = response.data.loggedInUser;
         let {userToken} = response.data;
-        console.log(email, _id, userToken, 'email, _id, usertoken inside login')
         
         history.push('/schedule');
         return dispatch(loginUserSuccess(email, _id, userToken));
@@ -103,7 +101,7 @@ export const loginUser = (email, password) => (dispatch) => {
     })
     .catch((error) => {
       console.log(error);
-    })
+    });
 };
 
 

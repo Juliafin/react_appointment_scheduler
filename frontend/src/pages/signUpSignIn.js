@@ -1,6 +1,6 @@
 import React, {Component} from 'react';
 import {connect} from 'react-redux';
-import {Row, Col, Input, Button} from 'react-materialize';
+import {Row, Col, Input, Button, Preloader} from 'react-materialize';
 import {
   toggleRegistration,
   unsetRegistration,
@@ -91,6 +91,9 @@ class SignUpSignIn extends Component {
   render () {
     return (
       <div className="slowPopIn" id="signUpSignIn">
+        <div className="modal-overlay">
+          <Preloader active={this.props.loaderState}></Preloader>
+        </div>
         <div className="choice">I would like to: </div>
         <Row>
           <Col l={12}>
@@ -148,7 +151,8 @@ const mapStateToProps = (state) => ({
   passwordValid: state.passwordValid,
   signInSignUpFormValid: state.signInSignUpFormValid,
   password: state.password,
-  email: state.email
+  email: state.email,
+  loaderState: state.loaderState
 });
 
 export default connect(mapStateToProps)(SignUpSignIn);
