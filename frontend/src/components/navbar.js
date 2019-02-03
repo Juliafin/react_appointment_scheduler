@@ -1,8 +1,8 @@
 import React from 'react';
-import {Navbar, NavItem} from 'react-materialize';
+import {Navbar, NavItem, Button} from 'react-materialize';
 import {Link} from 'react-router-dom';
 import {connect} from 'react-redux';
-import {enableGuestMode} from './../actions/appointmentActions';
+import {enableGuestMode, logout} from './../actions/appointmentActions';
 import './navbar.css';
 
 export const Nav = (props) => {
@@ -20,6 +20,16 @@ export const Nav = (props) => {
         }
           
       </NavItem>
+      {
+        props.currentUserAuthenticated ?
+          <NavItem>
+            <Button className="waves-red waves-effect logOut" onClick={() => props.dispatch(logout())}>
+              Log Out
+            </Button>
+          </NavItem>
+          :
+          null
+      }
 
     </Navbar>
   );

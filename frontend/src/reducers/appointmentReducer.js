@@ -1,5 +1,6 @@
 /* eslint-disable no-case-declarations */
 import * as actionTypes from '../actions/actionTypes';
+import history from './../history';
 
 export const initialState = {
   currentUserAuthenticated: false,
@@ -225,12 +226,16 @@ export const appointmentReducer = (state=initialState, action) => {
   case actionTypes.AUTHENTICATE_USER_SUCCESS:
     return Object.assign({}, state, {currentUserAuthenticated: true});
   case actionTypes.LOGIN_USER_SUCCESS:
-    localStorage.setItem(JSON.stringify({
+    localStorage.setItem("auth", JSON.stringify({
       token: action.token,
       userEmail: action.email,
       userID: action._id
     }));
     return Object.assign({}, state, {currentUserAuthenticated: true});
+  case actionTypes.LOGOUT:
+    localStorage.setItem("auth", null);
+    history.push('/');
+    return Object.assign({}, {currentUserAuthenticated: false});
   default:
     return state;
   }

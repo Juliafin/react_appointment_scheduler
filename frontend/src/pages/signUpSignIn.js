@@ -25,6 +25,7 @@ class SignUpSignIn extends Component {
     this.validateEmail = this.validateEmail.bind(this);
     this.validatePassword = this.validatePassword.bind(this);
     this.handleSignUpSignIn = this.handleSignUpSignIn.bind(this);
+    this.keyDownSubmit = this.keyDownSubmit.bind(this);
   }
 
   componentDidMount() {
@@ -58,7 +59,6 @@ class SignUpSignIn extends Component {
   }
 
   handleSignUpSignIn() {
-    console.log('Inside handle signup sign in ');
     console.log('this.props inside handle signup sign in', this.props);
     if (this.props.signInSignUpFormValid) {
       if (this.props.registration) {
@@ -80,6 +80,12 @@ class SignUpSignIn extends Component {
 
   toggleRegistration() {
     this.props.dispatch(toggleRegistration());
+  }
+
+  keyDownSubmit(event) {
+    if (event.key === "Enter") {
+      this.handleSignUpSignIn();
+    }
   }
 
   render () {
@@ -104,7 +110,8 @@ class SignUpSignIn extends Component {
               id="email"
               onChange={this.setEmail}
               success={this.props.emailValid ? '\u2713' : ''}
-              error={!this.props.emailValid ? 'Email is invalid' : ''}/>
+              error={!this.props.emailValid ? 'Email is invalid' : ''}
+              onKeyPress={this.keyDownSubmit}/>
           </Col>
           <Col m={6} offset="m5">
             <Input
@@ -113,7 +120,8 @@ class SignUpSignIn extends Component {
               id="password"
               onChange={this.setPassword}
               success={this.props.passwordValid ? '\u2713' : ''}
-              error={!this.props.passwordValid ? 'Between 6 and 20 characters. Must contain a lowercase, uppercase, number, and special character.' : ''}/>
+              error={!this.props.passwordValid ? 'Between 6 and 20 characters. Must contain a lowercase, uppercase, number, and special character.' : ''}
+              onKeyPress={this.keyDownSubmit}/>
           </Col>
         </Row>
 

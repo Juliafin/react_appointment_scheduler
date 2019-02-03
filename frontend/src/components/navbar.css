@@ -39,3 +39,11 @@ a.navLink:hover {
 div.nav-wrapper ul a:hover {
   background-color: #763626;
 }
+
+.logOut {
+  background-color: #763626;
+}
+
+.logOut:hover {
+  background-color: #b5523a;
+}

@@ -95,6 +95,8 @@ export const loginUser = (email, password) => (dispatch) => {
       if (response.data.message === "Successfully logged in") {
         let {email, _id} = response.data.loggedInUser;
         let {userToken} = response.data;
+        console.log(email, _id, userToken, 'email, _id, usertoken inside login')
+        
         history.push('/schedule');
         return dispatch(loginUserSuccess(email, _id, userToken));
       }
