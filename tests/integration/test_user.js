@@ -29,8 +29,17 @@ describe('Testing user model', (done) => {
     expect(foundUser.email).to.be.equal(user.email);
   });
 
-  // it('Throws a validation error when given incorrect User Data', async() => {
+  it('Throws a validation error when given incorrect User Data', async() => {
+    let invalidIser = {email: "notanEmail", password: "5", phoneNumber: "1231237538123"};
+    try {
+      await User.create(invalidIser);
+    } catch(error) {
+      console.log('Validation error creating user');
+      console.log(error.errors.email.message);
+      console.log(typeof(error.errors.email));
+      expect(error.errors.email.message).to.be.a('string');
+      expect(error.errors.email.message).to.equal('The email must be valid.');
+    }
 
-
-  // });
+  });
 });
