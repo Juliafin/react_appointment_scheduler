@@ -2,7 +2,7 @@ import React, {Component} from 'react';
 import {connect} from 'react-redux';
 import {Button} from 'react-materialize';
 import {Link} from 'react-router-dom';
-import {enableGuestMode, checkTokenAndUserExists, authenticateUser} from './../actions/appointmentActions';
+import {enableGuestMode, checkTokenAndUserExists} from './../actions/appointmentActions';
 import './home.css';
 import {getIpInfo} from './..//actions/appointmentActions';
 

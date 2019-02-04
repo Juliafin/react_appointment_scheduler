@@ -22,12 +22,18 @@ export const getAppointments = (token) => (dispatch) => {
 
 };
 
-
 export const logout = () => ({
   type: actionTypes.LOGOUT
 });
 
+export const signInSignUpFailed = () => ({
+  type: actionTypes.SIGNIN_SIGN_UP_FAILED
+});
 
+export const signInSignUpFailedReset = () => ({
+  type: actionTypes.SIGNIN_SIGN_UP_FAILED_RESET
+  
+});
 
 export const checkTokenAndUserExists = () => ({
   type: actionTypes.CHECK_TOKEN_AND_USER_EXISTS
@@ -45,13 +51,9 @@ export const authenticateUser = (token) => (dispatch) => {
 
   axios.post(AUTH_ENDPOINT, {}, {headers})
     .then((authResponse) => {
-      console.log(authResponse.status);
-      console.log(authResponse.data);
-      console.log('INSIDE AUTHENTICATE RESPONSE');
       return dispatch(authenticateUserSuccess());
     });
 };
-
 
 
 export const registerUserSuccess = (token, email, _id) => ({
@@ -63,7 +65,6 @@ export const registerUser = (email, password) => (dispatch) => {
   let REGISTER_ENDPOINT = "/auth/register";
   axios.post(REGISTER_ENDPOINT, {email, password})
     .then((response) => {
-      console.log(response);
       // dispatch a success action
       if (response.data.message === "User Created") {
         let {email, _id} = response.data.createdUser;
@@ -74,7 +75,7 @@ export const registerUser = (email, password) => (dispatch) => {
     })
     .catch((error) => {
       console.log('There was an error registering');
-      // dispatch a failure action
+      return dispatch(signInSignUpFailed());
     });
 };
 
@@ -101,6 +102,7 @@ export const loginUser = (email, password) => (dispatch) => {
     })
     .catch((error) => {
       console.log(error);
+      return dispatch(signInSignUpFailed());
     });
 };
 

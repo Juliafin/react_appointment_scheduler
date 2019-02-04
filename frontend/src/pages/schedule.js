@@ -42,6 +42,7 @@ class Schedule extends Component {
   }
 
   componentDidMount() {
+    console.log('inside schedule js componentdidmount', this.props)
 
     this.props.dispatch(checkTokenAndUserExists());
     if (this.props.guestMode) {
@@ -122,6 +123,7 @@ class Schedule extends Component {
   }
     
   render() {
+    console.log('this.props in schedule.js!', this.props);
     let modalHeader = this.props.currentAppointment.edited ? 'Update Appointment Details' : 'Create Appointment';
     let modalButtonText = this.props.currentAppointment.edited ? 'Update' : 'Create';
     return (

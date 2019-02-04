@@ -1,6 +1,6 @@
 import React, {Component} from 'react';
 import {connect} from 'react-redux';
-import {Row, Col, Input, Button, Preloader} from 'react-materialize';
+import {Row, Col, Input, Button, Modal} from 'react-materialize';
 import {
   toggleRegistration,
   unsetRegistration,
@@ -11,7 +11,8 @@ import {
   validatePassword,
   validateSignInSignUp,
   registerUser,
-  loginUser
+  loginUser,
+  signInSignUpFailedReset
 } from './../actions/appointmentActions';
 import './signUpSignIn.css';
 
@@ -26,6 +27,7 @@ class SignUpSignIn extends Component {
     this.validatePassword = this.validatePassword.bind(this);
     this.handleSignUpSignIn = this.handleSignUpSignIn.bind(this);
     this.keyDownSubmit = this.keyDownSubmit.bind(this);
+    this.signSignUpFailureReset = this.signSignUpFailureReset.bind(this);
   }
 
   componentDidMount() {
@@ -88,12 +90,30 @@ class SignUpSignIn extends Component {
     }
   }
 
+  signSignUpFailureReset() {
+    this.props.dispatch(signInSignUpFailedReset());
+  }
+
   render () {
+    let failure = this.props.registration ? 'Sign up' : 'Sign in';
+    let modalHeader = `${failure} failed`;
     return (
       <div className="slowPopIn" id="signUpSignIn">
-        <div className="modal-overlay">
-          <Preloader active={this.props.loaderState}></Preloader>
-        </div>
+        <Modal
+          header={modalHeader}
+          open={this.props.signInSignUpFailed}
+          fixedFooter
+          actions={
+            <Button
+              id="closeModal"
+              onClick={this.signSignUpFailureReset}>
+              Close
+            </Button>
+          }>
+          <p>
+            {failure} failed. {this.props.registration ? 'There was an error registering the user.': 'The user already exists.'} 
+          </p>
+        </Modal>
         <div className="choice">I would like to: </div>
         <Row>
           <Col l={12}>
@@ -152,7 +172,8 @@ const mapStateToProps = (state) => ({
   signInSignUpFormValid: state.signInSignUpFormValid,
   password: state.password,
   email: state.email,
-  loaderState: state.loaderState
+  loaderState: state.loaderState,
+  signInSignUpFailed: state.signInSignUpFailed
 });
 
 export default connect(mapStateToProps)(SignUpSignIn);

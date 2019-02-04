@@ -24,7 +24,8 @@ export const initialState = {
   email: "",
   emailValid: false,
   passwordValid: false,
-  signInSignUpFormValid: false
+  signInSignUpFormValid: false,
+  signInSignUpFailed: false
 };
 
 export const appointmentReducer = (state=initialState, action) => {
@@ -206,7 +207,6 @@ export const appointmentReducer = (state=initialState, action) => {
   
   case actionTypes.CHECK_TOKEN_AND_USER_EXISTS:
     let authInfo = JSON.parse(localStorage.getItem("auth"));
-    console.log(authInfo, 'auth info inside check token action');
     if (authInfo){
       let {token, userEmail, userID} = authInfo;
       if (token && userID && userEmail) {
@@ -222,21 +222,30 @@ export const appointmentReducer = (state=initialState, action) => {
       userEmail: action.email,
       userID: action.id
     }));
-    return Object.assign({}, state, {currentUserAuthenticated: true});
+    return Object.assign({}, state, {currentUserAuthenticated: true, currentUserEmail: action.email, currentUserID: action.id, currentUserToken: action.token});
+
   case actionTypes.AUTHENTICATE_USER_SUCCESS:
     return Object.assign({}, state, {currentUserAuthenticated: true});
+
   case actionTypes.LOGIN_USER_SUCCESS:
     localStorage.setItem("auth", JSON.stringify({
       token: action.token,
       userEmail: action.email,
       userID: action.id
     }));
-    console.log(localStorage, 'local storage in login user');
-    return Object.assign({}, state, {currentUserAuthenticated: true});
+    return Object.assign({}, state, {currentUserAuthenticated: true, currentUserEmail: action.email, currentUserID: action.id, currentUserToken: action.token});
+
   case actionTypes.LOGOUT:
     localStorage.setItem("auth", null);
     history.push('/');
-    return Object.assign({}, {currentUserAuthenticated: false});
+    return Object.assign({}, state, {currentUserAuthenticated: false});
+
+  case actionTypes.SIGNIN_SIGN_UP_FAILED:
+    return Object.assign({}, state, {signInSignUpFailed: true});
+
+  case actionTypes.SIGNIN_SIGN_UP_FAILED_RESET:
+    return Object.assign({}, state, {signInSignUpFailed: false});
+
   default:
     return state;
   }
