@@ -8,6 +8,7 @@ export const initialState = {
   currentUserToken: '',
   currentUserEmail: '',
   appointments: [],
+  appointmentsSynced: false,
   guestMode: false,
   ipAvailable: false,
   ipData: null,
@@ -245,6 +246,27 @@ export const appointmentReducer = (state=initialState, action) => {
 
   case actionTypes.SIGNIN_SIGN_UP_FAILED_RESET:
     return Object.assign({}, state, {signInSignUpFailed: false});
+
+  case actionTypes.SYNC_MONGODB_APPOINTMENTS:
+    if (action.appointments.length) {
+      let stateAppointments = state.appointments.slice();
+
+      stateAppointments = stateAppointments.map((stateApt) => {
+
+        let {appointmentTime} = stateApt;
+        let matchingAppointment = action.appointments.find((appt) => {
+          return appt.time === appointmentTime;
+        });
+        if (matchingAppointment) {
+          stateApt.appointmentName = matchingAppointment.appointmentName;
+          stateApt.appointmentPhoneNumber = matchingAppointment.appointmentPhoneNumber;
+          stateApt._id = matchingAppointment._id;
+        }
+        return stateApt;
+      });
+      return Object.assign({}, state, {appointmentsSynced: true, appointments: [...stateAppointments]});
+    }
+    return state;
 
   default:
     return state;

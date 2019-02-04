@@ -3,22 +3,22 @@ import history from './../history';
 import * as actionTypes from './actionTypes';
 // TODO Get appointments
 
-
-export const getAppointmentsSuccess = () => ({
-  type: actionTypes.GET_APPOINTMENTS_SUCCESS
+export const syncMongoDBAppointments = (appointments) => ({
+  type: actionTypes.SYNC_MONGODB_APPOINTMENTS,
+  appointments
 });
 
 export const getAppointments = (token) => (dispatch) => {
   const GET_APPOINTMENTS_ENDPOINT = "/api/appointments";
   let headers = {'Authorization': `bearer ${token}`};
-  console.log('headers in get appointments', headers);
   axios.post(GET_APPOINTMENTS_ENDPOINT, {}, {headers})
     .then((response) => {
-      console.log('inside get appointments success');
-      console.log(response.data);
+      if (response.data.appointments) {
+        console.log(response.data.appointments);
+        return dispatch(syncMongoDBAppointments(response.data.appointments));
+      }
     })
     .catch((error) => {
-      console.log('inside get appointments failure');
       console.log(error);
     });
 
@@ -269,3 +269,36 @@ export const validatePassword = () => ({
 export const validateSignInSignUp = () => ({
   type: actionTypes.VALIDATE_SIGNIN_SIGNUP
 }); 
+
+
+export const addEditMongoDBAppointment = (appointment, token) => (dispatch) => {
+  console.log('inside add edit mongo appointment');
+  const ADD_APPOINTMENT_URL = '/api/addAppointment';
+  const EDIT_APPOINTMENT_URL = '/api/updateAppointment';
+  let API_URL = appointment._id ? EDIT_APPOINTMENT_URL : ADD_APPOINTMENT_URL;
+  let headers = {'Authorization': `bearer ${token}`};
+  let appointmentToPost = {
+    appointmentName: appointment.appointmentName,
+    appointmentPhoneNumber: appointment.appointmentPhoneNumber,
+    time: appointment.appointmentTime
+  };
+  console.log('appointment to update inside add edit mongo appointment', appointmentToPost);
+  console.log('headers', headers)
+  if (API_URL === EDIT_APPOINTMENT_URL) {
+    appointmentToPost._id = appointment._id;
+    axios.put(API_URL, appointmentToPost, {headers})
+      .then((response) => {
+        console.log('Inside update appointment response');
+        console.log(response);
+      })
+      .catch(err => console.log(err));
+  } else {
+    axios.post(API_URL, appointmentToPost, {headers})
+      .then((response) => {
+        console.log('Inside add appointment response');
+        console.log(response);
+      })
+      .catch((err) => err);
+
+  }
+};

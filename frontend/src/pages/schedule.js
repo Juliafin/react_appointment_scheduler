@@ -18,7 +18,8 @@ import {
   hideDeleteConfirmationModal,
   getAppointments,
   checkTokenAndUserExists,
-  authenticateUser
+  authenticateUser,
+  addEditMongoDBAppointment
   
 } from './../actions/appointmentActions';
 import TimeTable from './../components/timeTable';
@@ -42,29 +43,31 @@ class Schedule extends Component {
   }
 
   componentDidMount() {
-    console.log('inside schedule js componentdidmount', this.props);
 
     this.props.dispatch(checkTokenAndUserExists());
     if (this.props.guestMode) {
       this.props.dispatch(retrieveAppointmentsCache());
-    } else {
+    } else if (!this.props.appointmentsSynced) {
       this.props.dispatch(setAppointmentTimes(generateTimes(this.props.initialHour, this.props.endHour)));
+    }
+    if (this.props.currentUserAuthenticated && !this.props.appointmentsSynced) {
+      this.props.dispatch(getAppointments(this.props.currentUserToken));
     }
 
   }
 
   componentWillReceiveProps(nextProps) {
 
-    console.log('this.props in component will receive props', this.props, 'next props', nextProps);
     if (nextProps.currentUserEmail && nextProps.currentUserID && nextProps.currentUserToken && !nextProps.currentUserAuthenticated) {
       this.props.dispatch(authenticateUser(nextProps.currentUserToken));
     }
 
-    if (nextProps.currentUserAuthenticated) {
+    if (nextProps.currentUserAuthenticated && !this.props.appointmentsSynced) {
       this.props.dispatch(getAppointments(this.props.currentUserToken));
     }
 
   }
+
 
   closeModal() {
     this.props.dispatch(hideModal());
@@ -77,6 +80,21 @@ class Schedule extends Component {
     this.props.dispatch(setAppointmentEdited());
     this.props.dispatch(writeAppointmentsCache());
     this.clearAppointment();
+    this.addEditMongoDBAppointment();
+    
+  }
+
+  addEditMongoDBAppointment() {
+    if (!this.props.guestMode && this.props.currentUserAuthenticated) {
+      console.log('inside close modal and update!');
+      let appointmentInState = this.props.appointments[this.props.currentAppointment.appointmentIndex];
+      let currentAppointment = this.props.currentAppointment;
+      if (appointmentInState._id) {
+        currentAppointment._id = appointmentInState._id;
+      }
+      console.log(currentAppointment, 'APPOINTMENT TO UPDATE!');
+      this.props.dispatch(addEditMongoDBAppointment(currentAppointment, this.props.currentUserToken));
+    }
   }
 
   validate() {
@@ -102,7 +120,6 @@ class Schedule extends Component {
 
   updateAppointment() {
     this.props.dispatch(updateAppointment());
-    
   }
 
   deleteAppointments() {
@@ -127,7 +144,6 @@ class Schedule extends Component {
   }
     
   render() {
-    console.log('this.props in schedule.js!', this.props);
     let modalHeader = this.props.currentAppointment.edited ? 'Update Appointment Details' : 'Create Appointment';
     let modalButtonText = this.props.currentAppointment.edited ? 'Update' : 'Create';
     return (
@@ -244,7 +260,8 @@ const mapStateToProps = (state) => ({
   currentUserAuthenticated: state.currentUserAuthenticated,
   currentUserToken: state.currentUserToken,
   currentUserID: state.currentUserID,
-  currentUserEmail: state.currentUserEmail
+  currentUserEmail: state.currentUserEmail,
+  appointmentsSynced: state.appointmentsSynced
 
 });
 

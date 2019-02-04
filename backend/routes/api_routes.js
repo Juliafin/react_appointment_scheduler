@@ -12,7 +12,6 @@ apiRouter.use(expressJWT({secret:SECRET}));
 
 // Get user appointments provided a userID
 apiRouter.post('/appointments', async(req, res) => {
-  console.log('REQ USER in appointments!', req.user);
   let {_id} = req.user.user;
   if (!_id) {
     return res.status(400).json({message: "User id has not been provided"});
@@ -22,7 +21,6 @@ apiRouter.post('/appointments', async(req, res) => {
     let user = await User
       .findById(_id)
       .populate('appointments');
-    // console.log('USER', user)
     if (!user) {
       return res.status(404).json({message: "The user has not been found"});
     } else {
@@ -47,7 +45,7 @@ apiRouter.post('/appointments', async(req, res) => {
 
 apiRouter.post("/addAppointment", async(req, res) => {
   let appointment = req.body;
-  console.log('REQ.USER!!!!', req.user);
+  console.log('REQ.USER in add Appointment!!!!', req.user);
   console.log(appointment, 'appointment in request body in add appointment');
   let {_id} = req.user.user;
   if (!appointment.appointmentName || !appointment.appointmentPhoneNumber || !_id) {
@@ -94,6 +92,7 @@ apiRouter.post("/addAppointment", async(req, res) => {
 // Update an appointment
 apiRouter.put('/updateAppointment', async(req, res) => {
   let appointment = req.body;
+  console.log('APPOINTMENT IN UPDATE APPOINTMENT!', appointment);
   let {_id} = appointment;
   if (!_id) {
     return res.status(400).json({message: "Id must be provided in order to update an appointment"});
