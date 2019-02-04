@@ -42,7 +42,7 @@ class Schedule extends Component {
   }
 
   componentDidMount() {
-    console.log('inside schedule js componentdidmount', this.props)
+    console.log('inside schedule js componentdidmount', this.props);
 
     this.props.dispatch(checkTokenAndUserExists());
     if (this.props.guestMode) {

@@ -14,7 +14,7 @@ export const getAppointments = (token) => (dispatch) => {
   console.log('headers in get appointments', headers);
   axios.post(GET_APPOINTMENTS_ENDPOINT, {}, {headers})
     .then((response) => {
-      console.log('inside get appointments success')
+      console.log('inside get appointments success');
       console.log(response.data);
     })
     .catch((error) => {
