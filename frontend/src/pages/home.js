@@ -2,6 +2,7 @@ import React, {Component} from 'react';
 import {connect} from 'react-redux';
 import {Button} from 'react-materialize';
 import {Link} from 'react-router-dom';
+import PropTypes from 'prop-types';
 import {enableGuestMode, checkTokenAndUserExists} from './../actions/appointmentActions';
 import './home.css';
 import {getIpInfo} from './..//actions/appointmentActions';
@@ -83,5 +84,13 @@ const mapStateToProps = (state) => ({
   currentUserID: state.currentUserID,
   currentUserToken: state.currentUserToken
 });
+
+Home.propTypes = {
+  guestMode: PropTypes.bool,
+  currentUserAuthenticated: PropTypes.bool,
+  currentUserEmail: PropTypes.string,
+  currentUserID: PropTypes.string,
+  currentUserToken: PropTypes.string,
+};
 
 export default connect(mapStateToProps)(Home);

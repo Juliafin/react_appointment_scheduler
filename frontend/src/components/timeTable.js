@@ -1,5 +1,6 @@
 import React, {Component} from 'react';
 import {connect} from 'react-redux';
+import PropTypes from 'prop-types';
 import Appointment from './appointment';
 import './timeTable.css';
 import {
@@ -65,5 +66,9 @@ class TimeTable extends Component {
 const mapStateToProps = (state) => ({
   appointments: state.appointments
 });
+
+TimeTable.propTypes = {
+  appointments: PropTypes.array
+};
 
 export default connect(mapStateToProps)(TimeTable);

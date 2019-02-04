@@ -2,6 +2,7 @@ import React from 'react';
 import {Navbar, NavItem, Button} from 'react-materialize';
 import {Link} from 'react-router-dom';
 import {connect} from 'react-redux';
+import PropTypes from 'prop-types';
 import {enableGuestMode, logout} from './../actions/appointmentActions';
 import './navbar.css';
 
@@ -40,5 +41,10 @@ const mapStateToProps = (state) => ({
   guestMode: state.guestMode,
   currentUserAuthenticated: state.currentUserAuthenticated
 });
+
+Nav.propTypes = {
+  guestMode: PropTypes.bool,
+  currentUserAuthenticated: PropTypes.bool
+};
 
 export default connect(mapStateToProps)(Nav);

@@ -1,5 +1,6 @@
 import React, {Component} from 'react';
 import {connect} from 'react-redux';
+import PropTypes from 'prop-types';
 import {Row, Col, Input, Button, Modal} from 'react-materialize';
 import {
   toggleRegistration,
@@ -172,8 +173,17 @@ const mapStateToProps = (state) => ({
   signInSignUpFormValid: state.signInSignUpFormValid,
   password: state.password,
   email: state.email,
-  loaderState: state.loaderState,
   signInSignUpFailed: state.signInSignUpFailed
 });
+
+SignUpSignIn.propTypes = {
+  registration: PropTypes.bool,
+  emailValid: PropTypes.bool,
+  passwordValid: PropTypes.bool,
+  signInSignUpFormValid: PropTypes.bool,
+  password: PropTypes.string,
+  email: PropTypes.string,
+  signInSignUpFailed: PropTypes.string
+};
 
 export default connect(mapStateToProps)(SignUpSignIn);

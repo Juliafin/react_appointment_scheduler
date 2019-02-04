@@ -1,6 +1,7 @@
 import React, {Component} from 'react';
 import {connect} from 'react-redux';
 import {Modal, Button, Row, Col, Input} from 'react-materialize';
+import PropTypes from 'prop-types';
 import {
   hideModal, 
   setCurrentAppointmentName,
@@ -264,5 +265,23 @@ const mapStateToProps = (state) => ({
   appointmentsSynced: state.appointmentsSynced
 
 });
+
+Schedule.propTypes = {
+  guestMode: PropTypes.bool,
+  showModal: PropTypes.bool,
+  currentAppointment: PropTypes.object,
+  appointments: PropTypes.array,
+  appointmentNameValid: PropTypes.bool,
+  phoneNumberValid: PropTypes.bool,
+  showDeleteModal: PropTypes.bool,
+  initialHour: PropTypes.number,
+  endHour: PropTypes.number,
+  currentUserAuthenticated: PropTypes.bool,
+  currentUserToken: PropTypes.string,
+  currentUserID: PropTypes.string,
+  currentUserEmail: PropTypes.string,
+  appointmentsSynced: PropTypes.bool
+};
+
 
 export default connect(mapStateToProps)(Schedule);

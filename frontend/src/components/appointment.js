@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import './appointment.css';
 
 
@@ -16,6 +17,13 @@ const Appointment = ({appointmentName, appointmentTime, appointmentIndex, appoin
       </div>
     </div>
   );
+};
+
+Appointment.propTypes = {
+  appointmentName: PropTypes.string,
+  appointmentTime: PropTypes.string,
+  appointmentIndex: PropTypes.number,
+  appointmentPhoneNumber: PropTypes.string
 };
 
 export default Appointment;

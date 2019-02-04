@@ -1,6 +1,8 @@
 import React, { Component } from 'react';
 import {connect} from 'react-redux';
 import {Route, withRouter} from 'react-router-dom';
+import PropTypes from 'prop-types';
+
 import Nav from './components/navbar';
 import Schedule from './pages/schedule';
 import SignUpSignIn from './pages/signUpSignIn';
@@ -46,5 +48,13 @@ const mapStateToProps = (state) => ({
   currentUserEmail: state.currentUserEmail
 });
 
+
+App.propTypes = {
+  initialHour: PropTypes.number,
+  endHour: PropTypes.number,
+  currentUserID: PropTypes.string,
+  currentUserToken: PropTypes.string,
+  currentUserEmail: PropTypes.string
+};
 
 export default withRouter(connect(mapStateToProps)(App));
