@@ -4,7 +4,6 @@ const mongoose = require('mongoose');
 const {expect} = require('chai');
 const chaiHttp = require('chai-http');
 const {app, startServer, closeServer} = require('../../server');
-const {MONGO_URL} = require('../../config');
 
 chai.use(chaiHttp);
 
