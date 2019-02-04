@@ -70,6 +70,14 @@ Authorization: bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyRm91bmQiOnsiY
 GET http://localhost:9001/api/appointments
 Authorization: bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjp7ImFwcG9pbnRtZW50cyI6W10sIl9pZCI6IjVjNTM2YTBkNzIwYjdmMmIzNTAzZTUxYyIsImVtYWlsIjoiaGVsbG90ZXN0M0BnbWFpbC5jb20iLCJwYXNzd29yZCI6IiQyYSQxMCRYa05sUXJ0QnoxMVM2VHZPbnh2QU51ZlhBUThxbHY5OGFZejhtYUZuV1VoTktQQTFSNTlHNiIsIl9fdiI6MH0sImlhdCI6MTU0ODk3MDUwOX0.tTC5kcfcHjxOULvx-zuGo1U8qqH5j2C_5QWhtL_ucT4
 
+### Valid Request
+GET http://localhost:9001/api/appointments
+Authorization: bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjp7ImFwcG9pbnRtZW50cyI6W10sIl9pZCI6IjVjNTNkMTA0OThmZWQyOTI3MzA2YzcwZSIsImVtYWlsIjoiSnVsaWVAZ21haWwuY29tIiwicGFzc3dvcmQiOiIkMmEkMTAkR2Vna2Q3Undha3luYjM5bGF4Mk1qLm1SM3cxdUVYbjF5bmtCS2VFY0pMN3dVbFIyYUtkQUsiLCJfX3YiOjB9LCJpYXQiOjE1NDkyMTc0MzZ9.CPh6d9eac4vXGAxDA0zYhngbpksF8EI1fm9sV-ZMPkQ
+
+
+
+
+
 
 ### Valid Request
 POST http://localhost:9001/api/addAppointment
@@ -80,6 +88,17 @@ Content-Type: application/json
     "appointmentName": "Another test :)",
     "appointmentPhoneNumber": "253-426-7890",
     "time": "4:00 PM"
+  }
+
+### Julie2@gmail.com
+POST http://localhost:9001/api/addAppointment
+Authorization: bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjp7ImFwcG9pbnRtZW50cyI6W10sIl9pZCI6IjVjNTc4NWJiOWVlN2YyN2ZjNzIxOTdiOSIsImVtYWlsIjoiSnVsaWUyQGdtYWlsLmNvbSIsInBhc3N3b3JkIjoiJDJhJDEwJFZoakNob2g4YlhETjdKclROVHNDUHVIRlp3WlRFQm90Z1lNUnVvUHM2SU1ZRkoyYUJDNGpHIiwiX192IjowfSwiaWF0IjoxNTQ5MjQxNjc2fQ.HHHOZ3r2NSQNjNhyCnmTzmlALOy2ZEvtBRtj0uSZ9-M
+Content-Type: application/json
+
+  {
+    "appointmentName": "Another test",
+    "appointmentPhoneNumber": "253-426-7890",
+    "time": "5:00 PM"
   }
 
 

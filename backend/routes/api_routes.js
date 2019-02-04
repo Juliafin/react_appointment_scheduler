@@ -3,7 +3,7 @@ const {User, Appointment} = require('../models/');
 const bodyParser = require('body-parser');
 const expressJWT = require('express-jwt');
 const {SECRET} = require('./../../config');
-
+const mongoose = require('mongoose');
 const apiRouter = express.Router();
 
 apiRouter.use(bodyParser.json());
@@ -11,7 +11,7 @@ apiRouter.use(bodyParser.urlencoded({extended: true}));
 apiRouter.use(expressJWT({secret:SECRET}));
 
 // Get user appointments provided a userID
-apiRouter.get('/appointments', async(req, res) => {
+apiRouter.post('/appointments', async(req, res) => {
   console.log('REQ USER in appointments!', req.user);
   let {_id} = req.user.user;
   if (!_id) {
@@ -27,7 +27,7 @@ apiRouter.get('/appointments', async(req, res) => {
       return res.status(404).json({message: "The user has not been found"});
     } else {
       if (!user.appointments.length) {
-        return res.status(404).json({message: "User has no appointments", appointments: user.appointments, _id});
+        return res.status(200).json({message: "User has no appointments", appointments: user.appointments, _id});
       } else {
         return res.json({message: "Appointments found", appointments: user.appointments, _id});
 
@@ -47,8 +47,9 @@ apiRouter.get('/appointments', async(req, res) => {
 
 apiRouter.post("/addAppointment", async(req, res) => {
   let appointment = req.body;
+  console.log('REQ.USER!!!!', req.user);
   console.log(appointment, 'appointment in request body in add appointment');
-  let _id = req.user.user;
+  let {_id} = req.user.user;
   if (!appointment.appointmentName || !appointment.appointmentPhoneNumber || !_id) {
     return res.status(400).json({message: "Appointment name or phone number is not valid or userID not provided."});
   } else {
@@ -56,27 +57,34 @@ apiRouter.post("/addAppointment", async(req, res) => {
 
       //Check if appointment exists in the system
 
-      let appointmentFoundCount = await Appointment.find({time: appointment.time, user: _id}).count();
+      let appointmentFoundCount = await Appointment.find({time: appointment.time, user: _id}).countDocuments();
       console.log('Cound of appointment found', appointmentFoundCount);
 
       if (appointmentFoundCount) {
         return res.status(400).json({message: "Appointment already exists"});
 
       }
+      
+      let appointmentID = new mongoose.Types.ObjectId();
+
 
       appointment = new Appointment(appointment);
+      appointment._id = appointmentID;
       appointment.user = _id;
       console.log('USER ID', _id);
-      let savedAppointment = await appointment.save();
+      await appointment.save();
+
       let user = await User
         .findById(_id);
       
+
       console.log('found user', user);
-      user.appointments.push(savedAppointment._id);
-      let savedUser = await user.save();
-      return res.json({message: "Appointment saved", appointmentID: savedAppointment._id});
+      user.appointments.push(appointmentID);
+      await user.save();
+      return res.json({message: "Appointment saved", appointmentID: appointmentID, userID: _id});
     } catch(err) {
       console.log('There was an error adding the appointment');
+      console.log(err);
       return res.status(500).json({message: "There was an error saving the appointment"});
     }
 

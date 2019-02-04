@@ -14,19 +14,11 @@ class Home extends Component {
   }
   componentDidMount() {
     this.props.dispatch(checkTokenAndUserExists());
-    console.log('IN HOME JS', this.props);
     if (!this.props.ipData) {
       this.props.dispatch(getIpInfo());
     }
   }
 
-  // componentWillReceiveProps(nextProps) {
-  //   console.log('next props inside home.js', nextProps);
-  //   if (nextProps.currentUserEmail && nextProps.currentUserID && nextProps.currentUserToken && !nextProps.currentUserAuthenticated) {
-  //     console.log('Authenticating token!')
-  //     this.props.dispatch(authenticateUser(nextProps.currentUserToken));
-  //   }
-  // }
 
   guestMode() {
     this.props.dispatch(enableGuestMode());

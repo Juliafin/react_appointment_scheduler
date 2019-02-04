@@ -60,6 +60,10 @@ class Schedule extends Component {
       this.props.dispatch(authenticateUser(nextProps.currentUserToken));
     }
 
+    if (nextProps.currentUserAuthenticated) {
+      this.props.dispatch(getAppointments(this.props.currentUserToken));
+    }
+
   }
 
   closeModal() {

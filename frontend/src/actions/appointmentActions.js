@@ -11,12 +11,14 @@ export const getAppointmentsSuccess = () => ({
 export const getAppointments = (token) => (dispatch) => {
   const GET_APPOINTMENTS_ENDPOINT = "/api/appointments";
   let headers = {'Authorization': `bearer ${token}`};
-  console.log('Inside appointments!');
-  axios.get(GET_APPOINTMENTS_ENDPOINT, {}, {headers})
+  console.log('headers in get appointments', headers);
+  axios.post(GET_APPOINTMENTS_ENDPOINT, {}, {headers})
     .then((response) => {
+      console.log('inside get appointments success')
       console.log(response.data);
     })
     .catch((error) => {
+      console.log('inside get appointments failure');
       console.log(error);
     });
 
@@ -101,7 +103,7 @@ export const loginUser = (email, password) => (dispatch) => {
       }
     })
     .catch((error) => {
-      console.log(error);
+      console.log(error, 'error in login');
       return dispatch(signInSignUpFailed());
     });
 };

@@ -21,7 +21,6 @@ authRouter.post('/register', async(req, res) => {
   try {
 
     let foundUser = await User.findOne({email}).count();
-    console.log(foundUser);
   
     if (foundUser) {
       return res.status(400).json({message: "User already exists"});
@@ -33,7 +32,6 @@ authRouter.post('/register', async(req, res) => {
       email, password: hashedPassword
     });
     let userToken = jsonWebToken.sign({user:createdUser}, SECRET); 
-    console.log('Created user');
     res.json({
       message: "User Created", 
       createdUser: createdUser.showUser(),
@@ -49,7 +47,6 @@ authRouter.post('/register', async(req, res) => {
 
 
 authRouter.post('/login', async(req, res) => {
-  console.log('inside login');
   const {email, password} = req.body;
 
   if (!email || !password) {
@@ -59,13 +56,11 @@ authRouter.post('/login', async(req, res) => {
   try {
 
     let userFound = await User.findOne({email});
-    console.log(userFound);
     if (!userFound) {
       return res.status(404).json({message: "User not found."});
     }
   
     let passwordValid = userFound.validatePassword(password);
-    console.log('Password valid', passwordValid);
   
     if (passwordValid) {
       let userToken = jsonWebToken.sign({user:userFound}, SECRET);
@@ -83,7 +78,6 @@ authRouter.post('/login', async(req, res) => {
 
 authRouter.post('/authenticate', expressJWT({secret: SECRET}), (req, res) => {
 
-  console.log(req.user, 'INSIDE AUTHENTICATE', req.user);
   if(req.user.user._id) {
     return res.json({userID: req.user.user._id});
   } else {
