@@ -7,5 +7,5 @@ import {composeWithDevTools} from 'redux-devtools-extension';
 export default createStore(
   appointmentReducer,
   initialState,
-  composeWithDevTools(applyMiddleware(thunk))
+  applyMiddleware(thunk)
 );

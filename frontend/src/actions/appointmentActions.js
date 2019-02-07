@@ -282,8 +282,6 @@ export const addEditMongoDBAppointment = (appointment, token) => (dispatch) => {
     appointmentPhoneNumber: appointment.appointmentPhoneNumber,
     time: appointment.appointmentTime
   };
-  console.log('appointment to update inside add edit mongo appointment', appointmentToPost);
-  console.log('headers', headers)
   if (API_URL === EDIT_APPOINTMENT_URL) {
     appointmentToPost._id = appointment._id;
     axios.put(API_URL, appointmentToPost, {headers})
