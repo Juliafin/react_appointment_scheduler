@@ -42,32 +42,32 @@ class Home extends Component {
         {
           !this.props.currentUserAuthenticated ?
             <div className="welcome">
-              <Button 
-                waves="green">
-                <Link to="/login">
-                Login
-                </Link>
-              </Button>
-              <Button 
-                waves="green">
-                <Link to="/register">
+              <Link to="/login">
+                <Button 
+                  waves="green">
+                  Login
+                </Button>
+              </Link>
+              <Link to="/register">
+                <Button 
+                  waves="green">
                 Register
-                </Link>
-              </Button>
+                </Button>
+              </Link>
               
-              <Button waves="green">
-                <Link onClick={this.guestMode} to="/schedule">
+              <Link onClick={this.guestMode} to="/schedule">
+                <Button waves="green">
                 Guest
-                </Link>
-              </Button>
+                </Button>
+              </Link>
             </div>
             :
             <div className="welcome">
-              <Button waves="green">
-                <Link to="/schedule">
+              <Link to="/schedule">
+                <Button waves="green">
                 Schedule
-                </Link>
-              </Button>
+                </Button>
+              </Link>
             </div>
         }
       

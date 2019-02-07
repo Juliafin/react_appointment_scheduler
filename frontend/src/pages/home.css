@@ -22,12 +22,11 @@ ul#nav-mobile{
   background-color: #336b87;
 }
 
-div.welcome button {
+div.welcome a {
   padding: 0;
 }
 
-div.welcome button a {
-  display: block;
+div.welcome a button {
   width: 10vw;
 }
 
